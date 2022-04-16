@@ -99,7 +99,7 @@ function ResponsiveDrawer(props) {
                      <ListItemIcon>
                         <RiPlayListAddLine />
                      </ListItemIcon>
-                     <ListItemText primary='Добавлять Продукты' />
+                     <ListItemText primary='Добавить Продукты' />
                   </ListItem>
                </Link>
                <ListItem onClick={toggleDrawer} button>

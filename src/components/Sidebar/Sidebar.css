@@ -52,11 +52,11 @@ a.logo {
 }
 
 .MuiListItemButton-root.MuiListItemButton-gutters.MuiButtonBase-root.css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root.collapse_item {
-   width: 100%;
-   display: flex;
-   align-items: center;
-   justify-content: space-between;
-   padding: 10px 5px;
+   width: 100% !important;
+   display: flex !important;
+   align-items: center !important;
+   justify-content: space-between !important;
+   padding: 10px 5px !important;
 }
 
 .drop_collapse a.collapse_link span {
@@ -67,7 +67,7 @@ a.logo {
 }
 
 .MuiListItemButton-root.MuiListItemButton-gutters.css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root.collapse_item a.collapse_link span {
-   padding-left: 10px;
+   padding-left: 10px !important;
 }
 .cate_link {
    position: relative !important;
