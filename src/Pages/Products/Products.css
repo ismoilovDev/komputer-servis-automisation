@@ -23,7 +23,6 @@
 
 .box {
    width: 100%;
-   min-height: 500px;
    padding: 15px 15px 2px 15px;
    border-radius: 4px;
    background: #FCF6F0;
@@ -33,6 +32,7 @@
 .my_table {
    position: relative;
    width: 100%;
+   min-height: 500px;
    overflow-x: scroll;
 }
 

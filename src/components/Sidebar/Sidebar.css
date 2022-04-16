@@ -43,8 +43,8 @@ a.logo {
 }
 
 .MuiListItemIcon-root.css-cveggr-MuiListItemIcon-root svg {
-   font-size: 1.3rem;
-   font-weight: 600;
+   font-size: 1.3rem !important;
+   font-weight: 600 !important;
 }
 
 .drop_collapse {

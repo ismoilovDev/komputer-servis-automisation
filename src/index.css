@@ -13,6 +13,8 @@ body {
   width: 100%;
   min-height: 90vh;
   z-index: 1;
+  top: 80px;
+  padding: 1rem 0;
 }
 .main h2 {
   font-weight: 500;
@@ -42,5 +44,6 @@ span.sr-only, div.dataTables_info {
     left: 240px;
     width: calc(100% - 240px);
     z-index: 1;
+    top: 100px;
   }
 }
