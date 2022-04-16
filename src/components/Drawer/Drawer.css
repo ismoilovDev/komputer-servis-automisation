@@ -1,0 +1,29 @@
+.css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+   width: 250px !important;
+}
+.ant-tabs-nav-list {
+   padding: 0 8px;
+}
+.ant-tabs-tab div {
+   font-size: 14px;
+}
+@media (min-width: 768px) {
+   .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+      width: 300px !important;
+   }
+}
+@media (min-width: 900px) {
+   .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+      width: 350px !important;
+   }
+   
+   .ant-tabs-tab div {
+      font-size: 20px;
+   }
+}
+
+@media (min-width: 1200px) {
+   .css-1160xiw-MuiPaper-root-MuiDrawer-paper {
+      width: 500px !important;
+   }
+}

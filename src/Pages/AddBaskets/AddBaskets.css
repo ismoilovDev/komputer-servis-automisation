@@ -1,0 +1,21 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+p {
+   margin: 0;
+   padding: 0;
+}
+
+.for-bottom {
+   position: relative !important;
+   padding-bottom: 210px !important;
+}
+
+.to-bottom {
+   position: absolute;
+   width: 100%;
+   bottom: 0;
+   left: 0;
+   padding: 15px;
+}

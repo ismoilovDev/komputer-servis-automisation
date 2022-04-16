@@ -1,0 +1,223 @@
+* {
+   font-family: 'Source Sans Pro', sans-serif !important;
+   margin: 0;
+   padding: 0;
+}
+.header {
+   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 0px !important;
+   background-color: rgb(63, 81, 181) !important;
+}
+
+.toolbar {
+   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 0px;
+   z-index: 1100;
+   top: 0;
+   left: 0;
+   background-color: rgb(63, 81, 181);
+   color: #fff;
+}
+
+a {
+   color: rgba(0, 0, 0, 0.87);
+   font-family: 'Source Sans Pro', sans-serif !important;
+}
+
+ul {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   transition: all 0.15s ease-in;
+}
+
+a:hover {
+   color: rgba(0, 0, 0, 0.87);
+}
+
+a.logo {
+   color: #fff;
+   font-size: 2.1rem;
+}
+
+.MuiListItemIcon-root.css-cveggr-MuiListItemIcon-root {
+   min-width: 40px !important;
+}
+
+.MuiListItemIcon-root.css-cveggr-MuiListItemIcon-root svg {
+   font-size: 1.3rem;
+   font-weight: 600;
+}
+
+.drop_collapse {
+   background-color: #F5F5F5;
+}
+
+.MuiListItemButton-root.MuiListItemButton-gutters.MuiButtonBase-root.css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root.collapse_item {
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 10px 5px;
+}
+
+.drop_collapse a.collapse_link span {
+   width: 100%;
+   font-size: 15px;
+   display: flex;
+   padding-left: 37px;
+}
+
+.MuiListItemButton-root.MuiListItemButton-gutters.css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root.collapse_item a.collapse_link span {
+   padding-left: 10px;
+}
+.cate_link {
+   position: relative !important;
+   display: none !important;
+}
+
+/* <<------------------------- Fixed Menu ----------------------->> */
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-elevation16.MuiDrawer-paper.MuiDrawer-paperAnchorLeft.css-4t3x6l-MuiPaper-root-MuiDrawer-paper {
+   z-index: 10;
+}
+
+
+@media (min-width: 992px) {
+   .cate_link {
+      display: flex !important;
+      min-height: 64px !important;
+      width: 50px !important;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: .3s all cubic-bezier(0.19, 1, 0.22, 1);
+   }
+   .cate_link svg {
+      font-size: 25px;
+   }
+   .cate_link:hover .main_menu {
+      display: block !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transform: translateX(0);
+   }
+}
+
+/* ------------ */
+.my_drop, .sub_child {
+   visibility: hidden;
+   position: absolute;
+   width: 300px;
+   left: 0;
+   top: -9999px;
+   background: #fff;
+   -webkit-transition: visibility .1s cubic-bezier(0.19, 1, 0.22, 1) .2s, opacity .1s cubic-bezier(0.19, 1, 0.22, 1) .2s, transform .1s cubic-bezier(0.19, 1, 0.22, 1) .2s;
+   transition: visibility .1s cubic-bezier(0.19, 1, 0.22, 1) .2s, opacity .1s cubic-bezier(0.19, 1, 0.22, 1) .2s, transform .1s cubic-bezier(0.19, 1, 0.22, 1) .2s;
+   box-shadow: 0 2px 5px rgba(98, 98, 98, 0.2);
+   opacity: 0;
+   z-index: 1;
+}
+.my_drop ul.my_drop_ul, .sub_child ul.sub_child_ul, .sub_sub_child ul.sub_sub_child_ul {
+   width: 300px;
+   min-height: 300px;
+   max-height: 500px;
+   overflow-y: scroll;
+}
+.cate_link:hover .my_drop {
+   visibility: visible;
+   top: 64px;
+   left: -25px;
+   opacity: 10000;
+}
+.my_drop li {
+   display: block;
+   width: 100%;
+   transition: all 0.2s ease-in;
+   background-color: #fcfcfc;
+   font-size: 16px;
+   color: #212121;
+}
+.my_drop li .drop_text {
+   width: 100% !important;
+   min-height: 100%;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 10px;
+   border-bottom: 1px solid rgba(230, 228, 228, 0.973);
+   background-color: transparent;
+   transition: all 0.15s ease-in;
+   color: #212121;
+}
+.my_drop li .drop_text a {
+   display: inline-block;
+   flex-basis: 90%;
+   word-wrap: break-word;
+   word-break: break-all;
+   transition: all 0.15s ease-in;
+   text-transform: capitalize;
+   color: #212121;
+}
+.my_drop li .drop_text svg {
+   color: #212121;
+   font-weight: 300;
+   font-size: 18px;
+   transition: all 0.15s ease-in;
+}
+.my_drop li.my_drop_main_ul_li:hover,
+li.sub_child_ul_li:hover,
+li.sub_sub_child_li:hover {
+   background-color: #4759be;
+}
+.my_drop li.my_drop_main_ul_li:hover .drop_text.one a,
+li.sub_child_ul_li:hover .drop_text.two a,
+li.sub_sub_child_li:hover .drop_text.three a {
+   color: #fff;
+}
+.my_drop li.my_drop_main_ul_li:hover .drop_text.one svg,
+li.sub_child_ul_li:hover .drop_text.two svg {
+   color: #fff;
+}
+.sub_child {
+   visibility: hidden;
+   position: absolute;
+   min-height: 300px;
+   max-height: 500px;
+   width: 300px;
+   left: 100%;
+   top: 0;
+   background: #fff;
+   opacity: 0;
+   z-index: 1;
+   -webkit-transition: visibility .1s linear .2s, opacity .1s linear .2s;
+   transition: visibility .1s linear .2s, opacity .1s linear .2s;
+   box-shadow: 0 2px 5px rgba(98, 98, 98, 0.2);
+}
+.my_drop_main_ul_li:hover .sub_child {
+   visibility: visible;
+   top: 0;
+   left: 100%;
+   opacity: 1000000;
+}
+
+.sub_sub_child {
+   visibility: hidden;
+   position: absolute;
+   min-height: 300px;
+   max-height: 500px;
+   width: 300px;
+   left: 100%;
+   top: 0;
+   background: #fff;
+   opacity: 0;
+   z-index: 1;
+   -webkit-transition: visibility .1s linear .2s, opacity .1s linear .2s;
+   transition: visibility .1s linear .2s, opacity .1s linear .2s;
+   box-shadow: 0 2px 5px rgba(98, 98, 98, 0.2);
+}
+.sub_child_ul_li:hover .sub_sub_child {
+   visibility: visible;
+   top: 0;
+   left: 100%;
+   opacity: 1;
+   z-index: 1000000;
+}

@@ -1,0 +1,8 @@
+.pagination {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: end !important;
+    align-items: center !important;
+    padding: 15px 0 0 !important;
+    z-index: 100000 !important;
+}

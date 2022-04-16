@@ -1,0 +1,63 @@
+.modal_box {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   width: 90%;
+   color: #111;
+   border-radius: 5px;
+   background-color: #FAEEE7;
+   box-shadow: 0px 11px 15px -7px rgb(0 0 0 / 20%), 0px 24px 38px 3px rgb(0 0 0 / 14%), 0px 9px 46px 8px rgb(0 0 0 / 12%);;
+}
+.modal_box_product {
+   background-color: #fbfbfb;
+   color: #111;
+}
+.modal_box p {
+   display: flex;
+   align-items: center;
+   margin: 0 0 25px;
+}
+.modal_box p svg {
+   display: inline-block;
+   margin-right: 15px;
+   font-size: 35px;
+   border: 1px solid #fff;
+   padding: 5px;
+   border-radius: 5px;
+   background-color: #06cf06;
+   color: #fff;
+}
+.modal_box p.inn svg {
+   background-color: #6060DF;
+}
+.modal_box p.name {
+   font-size: 25px;
+   letter-spacing: 1px;
+   text-transform: capitalize;
+   font-weight: 600;
+   margin-bottom: 15px;
+}
+.modal_box p.phone, .modal_box p.inn {
+   letter-spacing: 1px;
+   font-size: 16px;
+   font-weight: 600;
+} 
+.modal_box span {
+   font-style: italic;
+   font-size: 14px;
+}
+
+@media (min-width: 556px) {
+   .modal_box {
+      width: 400px;
+   }
+}
+
+@media (min-width: 992px) {
+   .modal_box_product {
+      width: 600px;
+      background-color: #fbfbfb;
+      color: #111;
+   }
+}

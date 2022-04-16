@@ -1,0 +1,41 @@
+.wrapper-slect {
+   position: relative;
+}
+
+.wrapper-slect input.MuiInput-input.css-1x51dt5-MuiInputBase-input-MuiInput-input {
+   padding: 1px 0 5px;
+}
+
+.autoContainer {
+   position: absolute;
+   width: 98%;
+   max-height: 200px;
+   overflow-y: scroll;
+   margin: auto;
+   border-radius: 5px;
+   background: #ffffff;
+   box-shadow: 5px 5px 14px #d9d9d9,
+      -5px -5px 14px #ffffff;
+   padding: 10px;
+   left: 5px;
+   top: 101%;
+   z-index: 10;
+   opacity: 1;
+   display: block;
+   animation: autoCamliteAnime .27s ease-in;
+}
+@keyframes autoCamliteAnime {
+   from {
+      opacity: 0;
+      display: none;
+      top: 110%;
+   }
+   to {
+      opacity: 1;
+      display: block;
+      top: 101%;
+   }
+}
+.option {
+   cursor: pointer;
+}

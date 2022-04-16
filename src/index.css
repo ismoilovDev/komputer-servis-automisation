@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Source Sans Pro', sans-serif !important;
+  font-size: 16px !important;
+  background-color: #F4F5FD !important;
+}
+.main {
+  position: relative;
+  left: 0;
+  width: 100%;
+  min-height: 90vh;
+  z-index: 1;
+}
+.main h2 {
+  font-weight: 500;
+}
+a {
+  text-decoration: none;
+}
+ul {
+  list-style: none;
+}
+li {
+  list-style: none;
+}
+span.sr-only, div.dataTables_info {
+  display: none;
+}
+.datatable-pagination {
+  width: 100%;
+}
+.dataTables_wrapper .row {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+}
+@media(min-width: 600px) {
+  .main {
+    left: 240px;
+    width: calc(100% - 240px);
+    z-index: 1;
+  }
+}

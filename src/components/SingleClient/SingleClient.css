@@ -1,0 +1,21 @@
+.single_client {
+   width: 100%;
+   padding: 15px;
+}
+
+.single_client p {
+   font-size: 14px;
+}
+
+.text-red {
+   position: relative;
+   font-size: 20px;
+   color: red;
+   transform: translate(5px, -2px);
+}
+
+@media (min-width: 768px) {
+   .single_client p {
+      font-size: 16px;
+   }
+}

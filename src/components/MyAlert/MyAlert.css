@@ -1,0 +1,7 @@
+.my-alert {
+   position: fixed;
+   top: 40px;
+   min-width: 350px;
+   padding: 15px;
+   transform-origin: top;
+}
