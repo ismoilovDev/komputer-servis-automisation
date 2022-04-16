@@ -38,25 +38,12 @@ a.logo {
    font-size: 2.1rem;
 }
 
-.MuiListItemIcon-root.css-cveggr-MuiListItemIcon-root {
+.my_link {
    min-width: 40px !important;
-}
-
-.MuiListItemIcon-root.css-cveggr-MuiListItemIcon-root svg {
-   font-size: 1.3rem !important;
-   font-weight: 600 !important;
 }
 
 .drop_collapse {
    background-color: #F5F5F5;
-}
-
-.MuiListItemButton-root.MuiListItemButton-gutters.MuiButtonBase-root.css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root.collapse_item {
-   width: 100% !important;
-   display: flex !important;
-   align-items: center !important;
-   justify-content: space-between !important;
-   padding: 10px 5px !important;
 }
 
 .drop_collapse a.collapse_link span {
@@ -66,9 +53,6 @@ a.logo {
    padding-left: 37px;
 }
 
-.MuiListItemButton-root.MuiListItemButton-gutters.css-cvhtoe-MuiButtonBase-root-MuiListItemButton-root.collapse_item a.collapse_link span {
-   padding-left: 10px !important;
-}
 .cate_link {
    position: relative !important;
    display: none !important;

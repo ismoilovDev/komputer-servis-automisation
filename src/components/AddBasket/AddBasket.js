@@ -29,7 +29,6 @@ const useStyles = makeStyles({
 function Basket({ handleClose, setOrders, display, setDisplay, wrapperRef, products }) {
    const classes = useStyles();
    const [productId, setProductId] = useState('');
-   // const [idMe, setIdMe] = useState(1);
    const [productName, setProductName] = useState('');
    const [price, setPrice] = useState('');
    const [unit, setUnit] = useState('');

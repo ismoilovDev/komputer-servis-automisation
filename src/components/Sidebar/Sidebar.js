@@ -22,15 +22,27 @@ import { FiServer } from "react-icons/fi";
 import Drawers from '../Drawer/Drawer'
 import { Link } from 'react-router-dom';
 import { Collapse, ListItemButton, Tooltip, Alert } from '@mui/material';
-import http from '../../Services/getData';
 import { FaUsers, FaUserCircle } from 'react-icons/fa';
-import './Sidebar.css';
 import { HiOutlineUserAdd } from 'react-icons/hi';
+import { makeStyles } from '@mui/styles';
+import http from '../../Services/getData';
+import './Sidebar.css';
 
 const drawerWidth = 240;
+const useStyles = makeStyles({
+   linkIcon: {
+      minWidth: "30px",
+      display: 'none'
+   },
+   linkSvg: {
+      fontSize: "1.3rem",
+      fontWeight: 600
+   }
+})
 
 function ResponsiveDrawer(props) {
    const { window } = props;
+   const classes = useStyles();
    const [mobileOpen, setMobileOpen] = useState(false);
    const [open, setOpen] = useState(false);
    const [state, setState] = useState(false)
@@ -71,8 +83,8 @@ function ResponsiveDrawer(props) {
          <Box sx={{ overflow: 'auto' }}>
             <List>
                <ListItemButton onClick={handleClick}>
-                  <ListItemIcon>
-                     <AiOutlineAppstoreAdd />
+                  <ListItemIcon className="my_link">
+                     <AiOutlineAppstoreAdd className={classes.linkSvg} />
                   </ListItemIcon>
                   <ListItemText primary="Добавить Категории" />
                   {open ? <MdArrowDropUp /> : <MdArrowDropDown />}
@@ -96,46 +108,46 @@ function ResponsiveDrawer(props) {
                </Collapse>
                <Link to="/add-products">
                   <ListItem button>
-                     <ListItemIcon>
-                        <RiPlayListAddLine />
+                     <ListItemIcon className="my_link">
+                        <RiPlayListAddLine className={classes.linkSvg} />
                      </ListItemIcon>
                      <ListItemText primary='Добавить Продукты' />
                   </ListItem>
                </Link>
                <ListItem onClick={toggleDrawer} button>
-                  <ListItemIcon>
-                     <HiOutlineUserAdd />
+                  <ListItemIcon className="my_link">
+                     <HiOutlineUserAdd className={classes.linkSvg} />
                   </ListItemIcon>
                   <ListItemText primary='Добавить Клиенты' style={{ "cursor": "pointer" }} />
                </ListItem>
                <Link to="/">
                   <ListItem button>
-                     <ListItemIcon>
-                        <BsBasket2Fill />
+                     <ListItemIcon className="my_link">
+                        <BsBasket2Fill className={classes.linkSvg} />
                      </ListItemIcon>
                      <ListItemText primary='Создание Заявки' />
                   </ListItem>
                </Link>
                <Link to="/categories">
                   <ListItem button>
-                     <ListItemIcon>
-                        <BiCategory />
+                     <ListItemIcon className="my_link">
+                        <BiCategory className={classes.linkSvg} />
                      </ListItemIcon>
                      <ListItemText primary='Категории' />
                   </ListItem>
                </Link>
                <Link to="/products">
                   <ListItem button>
-                     <ListItemIcon>
-                        <FiServer />
+                     <ListItemIcon className="my_link">
+                        <FiServer className={classes.linkSvg} />
                      </ListItemIcon>
                      <ListItemText primary='Продукты' />
                   </ListItem>
                </Link>
                <Link to="/clients">
                   <ListItem button>
-                     <ListItemIcon>
-                        <FaUsers />
+                     <ListItemIcon className="my_link">
+                        <FaUsers className={classes.linkSvg} />
                      </ListItemIcon>
                      <ListItemText primary='Клиенты' />
                   </ListItem>
