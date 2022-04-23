@@ -16,9 +16,9 @@ function AddCategories() {
    const [display1, setDisplay1] = useState(false);
    const [options, setOptions] = useState([]);
    const [name, setName] = useState('');
-   const [minPrecent, setMinPercent] = useState('');
-   const [maxPercent, setMaxPercent] = useState('');
-   const [wholesale, setWholesale] = useState('');
+   const [minPrecent, setMinPercent] = useState(null);
+   const [maxPercent, setMaxPercent] = useState(null);
+   const [wholesale, setWholesale] = useState(null);
    const [alertCount, setAlertCount] = useState('');
    const wrapperRef = useRef(null);
    const wrapperRef1 = useRef(null);
@@ -165,9 +165,10 @@ function AddCategories() {
          <MyAlert
             notific={notific}
             handleClose={handleClose}
-            success={success}
-            errorMessage="Категория не добавлена"
-            successMessage="Добавлена категория"
+            from="create"
+            created={success}
+            unCreatedMessage="Категория не добавлена"
+            createdMessage="Добавлена категория"
          />
       </>
    )

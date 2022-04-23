@@ -30,7 +30,9 @@ function SingleContent({ singleCont }) {
          {
             inn ? <p className='inn'><MdOutlineDocumentScanner />{ inn }</p> : ""
          }
-         <span>{descpr}</span>
+         {
+            descpr ? <span className='descpr'>{descpr}</span> : null
+         }
       </div>
    )
 }

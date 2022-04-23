@@ -6,38 +6,35 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Alert } from 'antd';
 
 function EditCategory({
-   id,
+   selectedCategory,
    categories,
    subCategories,
    doubleSubCategories,
    setCategories,
    setSubCategories,
    setDoubleSubCategories,
-   setOpen
+   setOpen,
+   handleClick,
+   setSuccess,
+   setFrom
 }) {
-   const [clicked, setClicked] = useState(false)
-   const [hasError, setHasError] = useState(false)
+   const [clicked, setClicked] = useState(false);
+   const [hasError, setHasError] = useState(false);
    const [name, setName] = useState('');
+   const [categoryId, setCategoryId] = useState('')
    const [minProsent, setMinProsent] = useState('');
    const [maxProsent, setMaxProsent] = useState('');
    const [wholeProsent, setWholeProsent] = useState('');
+   
+   
    useEffect(() => {
-      const getSingleCategory = async () => {
-         await http
-            .get(`/category/${id}`)
-            .then (res => {
-               setName(res.data.name);
-               setMinProsent(res.data.min_percent);
-               setWholeProsent(res.data.whole_percent);
-               setMaxProsent(res.data.max_percent);
-            })
-            .catch(err => {
-               console.log(err);
-            })
-      }
-      getSingleCategory()
+      setCategoryId(selectedCategory.id)
+      setName(selectedCategory.name);
+      setMinProsent(selectedCategory.min_percent);
+      setWholeProsent(selectedCategory.whole_percent);
+      setMaxProsent(selectedCategory.max_percent);
    }, // eslint-disable-next-line
-      [id])
+      [])
 
 
    // Update Category
@@ -46,7 +43,7 @@ function EditCategory({
       setClicked(true)
       setHasError(false)
       const data = {
-         category_id: Number(id),
+         category_id: Number(categoryId),
          name: name,
          min_percent: Number(minProsent),
          whole_percent: Number(wholeProsent),
@@ -56,10 +53,10 @@ function EditCategory({
          .patch(`/category/update`, data)
          .then(res => {
             setClicked(false);
-
+            console.log('updated');
             // Edited Categories
             const editedCate = categories.filter(item => {
-               if(item.id === id) {
+               if(item.id === selectedCategory.id) {
                   item.name = name;
                   item.min_percent = minProsent;
                   item.max_percent = maxProsent;
@@ -71,7 +68,7 @@ function EditCategory({
 
             // Edited Sub Categories
             const editedSubCate = subCategories.filter(item => {
-               if(item.id === id) {
+               if(item.id === selectedCategory.id) {
                   item.name = name;
                   item.min_percent = minProsent;
                   item.max_percent = maxProsent;
@@ -83,7 +80,7 @@ function EditCategory({
 
             // Edited Sub Categories
             const editedDoubleSubCate = doubleSubCategories.filter(item => {
-               if(item.id === id) {
+               if(item.id === selectedCategory.id) {
                   item.name = name;
                   item.min_percent = minProsent;
                   item.max_percent = maxProsent;
@@ -92,11 +89,17 @@ function EditCategory({
                return item;
             })
             setDoubleSubCategories(editedDoubleSubCate);
-            setOpen(false)
+            setOpen(false);
+            setFrom('update');
+            setSuccess(true);
+            handleClick();
          })
          .catch(err => {
             setClicked(false);
-            setHasError(true)
+            setHasError(true);
+            setSuccess(false);
+            setClicked(false);
+            setHasError(true);
          })
    }
    return (

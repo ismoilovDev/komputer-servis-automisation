@@ -1,27 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Tabs } from 'antd';
-import { FcBusinessContact, FcBusinessman, FcInTransit } from "react-icons/fc";
-import { FaRegEdit } from "react-icons/fa";
-import { IoMdTrash } from "react-icons/io";
-import Skeleton from '../../components/Skeleton/Skeleton';
+import { Tabs } from 'antd';
 import http from '../../Services/getData';
 import { Modal, Box, Paper } from '@mui/material';
 import EditCategory from '../../components/EditCategory/EditCategory';
 import '../Clients/Clients.css';
 import SingleCategory from '../../components/SingleCategory/SingleCategory';
+import { paginate } from '../../utils/paginate';
+import MyAlert from '../../components/MyAlert/MyAlert';
+import CategoriesList from '../../components/CategoriesList/CategoriesList';
 
 
 const { TabPane } = Tabs;
 
 function Categories() {
+   const [loaded, setLoaded] = useState(false);
    const [categories, setCategories] = useState([]);
    const [subCategories, setSubCategories] = useState([]);
    const [doubleSubCategories, setDoubleSubCategories] = useState([]);
-   const [loading, setLoading] = useState(false);
-   const [clickedId, setClickedId] = useState('');
+   const [selectedCategory, setSlectedCategory] = useState({});
    const [open, setOpen] = useState(false);
    const [openSingleCont, setOpenSingleCont] = useState(false);
    const [singleCont, setSingleCont] = useState({});
+   const [from, setFrom] = useState("");
+   const [success, setSuccess] = useState(false);
+   const [deleted, setDeleted] = useState(false);
+   const [notific, setNotific] = useState(false);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [pageSize] = useState(8);
+   let count = categories.length;
 
    useEffect(() => {
       getMainCategories()
@@ -32,33 +38,43 @@ function Categories() {
 
    // Edit Modal --------------->
    const handleClose = () => setOpen(false);
-   const clickedIdHendle = (id) => {
+   const clickedObjHendle = (obj) => {
       setOpen(true);
-      setClickedId(id)
+      setSlectedCategory(obj)
    }
 
 
    // Single Content Modal ------------->
    const handleSingleContClose = () => setOpenSingleCont(false);
-   const clickedSingleContIdHendle = (singleCate) => {
+   const clickedSingleObjHendle = (singleCate) => {
       setOpenSingleCont(true);
       setSingleCont(singleCate);
    }
 
+  // For Alert
+   const handleClick = () => {
+      setNotific(true);
+   };
 
+   const handleCloseBackdrop = (event, reason) => {
+      if (reason === 'clickaway') {
+         return;
+      }
+      setNotific(false)
+   };
+
+   const rows = ['Min prosent', 'Whole prosent', 'Max prosent', 'Операции'];
 
    // Get Main Categories
    const getMainCategories = async () => {
       await http
          .get('/category/categories')
          .then(res => {
-            setLoading(true)
             res.data.map(item => {
-               console.log(categories.some(child => child.id !== item.id))
                if (categories.every(child => child.id !== item.id)) {
                   setCategories(options => [...options, item]);
-                  console.log(categories);
                }
+               setLoaded(true)
                return res.data
             });
          })
@@ -82,13 +98,14 @@ function Categories() {
                }
                return res.data
             });
+            setLoaded(true)
          })
          .catch()
    }
 
-   // Get Sub Categories
-   const getDoubleSubCategories = () => {
-      http
+   // Get Double Sub Categories
+   const getDoubleSubCategories = async () => {
+      await http
          .get('/category/categories')
          .then(res => {
             res.data.map(item => {
@@ -107,6 +124,7 @@ function Categories() {
                }
                return res.data
             });
+            setLoaded(true)
          })
          .catch()
    }
@@ -119,14 +137,28 @@ function Categories() {
                setCategories(categories.filter(item => item.id !== id));
                setSubCategories(subCategories.filter(item => item.id !== id));
                setDoubleSubCategories(doubleSubCategories.filter(item => item.id !== id));
+               setFrom('delete');
+               setDeleted(true);
+               handleClick();
             })
             .catch(err => {
-
+               setFrom('delete');
+               setDeleted(false);
+               handleClick();
             })
       }
    }
 
 
+   // Change Page
+   const hendleChangePage = (page) => {
+      setCurrentPage(page)
+      window.scroll(0, 0);
+   }
+   // Paginate
+   const CategoryPaginated = paginate(categories, currentPage, pageSize);
+   const SubCategoryPaginated = paginate(subCategories, currentPage, pageSize);
+   const DoubleSubCategoryPaginated = paginate(doubleSubCategories, currentPage, pageSize);
    return (
       <>
          <div className='main px-2 px-md-3'>
@@ -136,208 +168,46 @@ function Categories() {
                </h2>
                <Tabs defaultActiveKey="1">
                   <TabPane tab="Categories" key="1">
-                     <div className='box'>
-                        <div className='my_table'>
-                           <ul>
-                              <li className='my_table_header'>
-                                 <span className='my_table_name'>
-                                    Category Name
-                                 </span>
-                                 <span>
-                                    Min prosent
-                                 </span>
-                                 <span>
-                                    Optom prosent
-                                 </span>
-                                 <span>
-                                    Max prosent
-                                 </span>
-                                 <span className='my_table_btns'>
-                                    Операции
-                                 </span>
-                              </li>
-
-                              {/* Company Clients */}
-                              {
-                                 loading ? (
-                                    <>
-                                       {
-                                          categories.length !== 0 ? (
-                                             categories.map((cate, i) => (
-                                                <li key={i} className='my_table_body'>
-                                                   <span className='my_table_name' onClick={() => clickedSingleContIdHendle(cate)}>
-                                                      <article>
-                                                         <FcBusinessContact />
-                                                      </article>
-                                                      {cate.name}
-                                                   </span>
-                                                   <span>
-                                                      {cate.min_percent}
-                                                   </span>
-                                                   <span>
-                                                      {cate.whole_percent}
-                                                   </span>
-                                                   <span>
-                                                      {cate.max_percent}
-                                                   </span>
-                                                   <span className='my_table_btns'>
-                                                      <button className='btn-edit' onClick={() => clickedIdHendle(cate.id)}>
-                                                         <FaRegEdit />
-                                                      </button>
-                                                      <button onClick={() => deleteCategoryHendle(cate.id, cate.name)}>
-                                                         <IoMdTrash />
-                                                      </button>
-                                                   </span>
-                                                </li>
-                                             ))
-                                          ) : (
-                                             <Alert message="Warning" type="warning" showIcon />
-                                          )
-                                       }
-                                    </>
-                                 ) : (
-                                    <Skeleton />
-                                 )
-                              }
-                           </ul>
-                        </div>
-                     </div>
+                     <CategoriesList
+                        loaded={loaded}
+                        paginated={CategoryPaginated}
+                        count={count}
+                        pageSize={pageSize} 
+                        hendleChangePage={hendleChangePage}
+                        name="Category Name"
+                        rows={rows}
+                        clickedSingleObjHendle={clickedSingleObjHendle}
+                        clickedObjHendle={clickedObjHendle}
+                        deleteData={deleteCategoryHendle}
+                     />
                   </TabPane>
                   <TabPane tab="Sub Categories" key="2">
-                     <div className='box'>
-                        <div className='my_table'>
-                           <ul>
-                              <li className='my_table_header'>
-                                 <span className='my_table_name'>
-                                    Category Name
-                                 </span>
-                                 <span>
-                                    Min prosent
-                                 </span>
-                                 <span>
-                                    Optom prosent
-                                 </span>
-                                 <span>
-                                    Max prosent
-                                 </span>
-                                 <span className='my_table_btns'>
-                                    Операции
-                                 </span>
-                              </li>
-
-                              {/* Jismoniy clients */}
-                              {
-                                 loading ? (
-                                    <>
-                                       {
-                                          subCategories.length !== 0 ? (
-                                             subCategories.map((cate, index) => (
-                                                <li key={index} className='my_table_body'>
-                                                   <span className='my_table_name' onClick={() => clickedSingleContIdHendle(cate)}>
-                                                      <article>
-                                                         <FcBusinessman />
-                                                      </article>
-                                                      {cate.name}
-                                                   </span>
-                                                   <span>
-                                                      {cate.min_percent}
-                                                   </span>
-                                                   <span>
-                                                      {cate.whole_percent}
-                                                   </span>
-                                                   <span>
-                                                      {cate.max_percent}
-                                                   </span>
-                                                   <span className='my_table_btns'>
-                                                      <button className='btn-edit' onClick={() => clickedIdHendle(cate.id)}>
-                                                         <FaRegEdit />
-                                                      </button>
-                                                      <button onClick={() => deleteCategoryHendle(cate.id, cate.name)}>
-                                                         <IoMdTrash />
-                                                      </button>
-                                                   </span>
-                                                </li>
-                                             ))
-                                          ) : (
-                                             <Alert message="Warning" type="warning" showIcon />
-                                          )
-                                       }
-                                    </>
-                                 ) : (
-                                    <Skeleton />
-                                 )
-                              }
-                           </ul>
-                        </div>
-                     </div>
+                     <CategoriesList
+                        loaded={loaded}
+                        paginated={SubCategoryPaginated}
+                        count={count}
+                        pageSize={pageSize} 
+                        hendleChangePage={hendleChangePage}
+                        name="Sub Category Name"
+                        rows={rows}
+                        clickedSingleObjHendle={clickedSingleObjHendle}
+                        clickedObjHendle={clickedObjHendle}
+                        deleteData={deleteCategoryHendle}
+                     />
                   </TabPane>
-                  <TabPane tab="Sub Sub categoris" key="3">
-                     <div className='box'>
-                        <div className='my_table'>
-                           <ul>
-                              <li className='my_table_header'>
-                                 <span className='my_table_name'>
-                                    Sub Sub Category Name
-                                 </span>
-                                 <span>
-                                    Min prosent
-                                 </span>
-                                 <span>
-                                    Optom prosent
-                                 </span>
-                                 <span>
-                                    Max prosent
-                                 </span>
-                                 <span className='my_table_btns'>
-                                    Операции
-                                 </span>
-                              </li>
-
-                              {/* Products */}
-                              {
-                                 loading ? (
-                                    <>
-                                       {
-                                          doubleSubCategories.length !== 0 ? (
-                                             doubleSubCategories.map((cate, id) => (
-                                                <li key={id} className='my_table_body'>
-                                                   <span className='my_table_name' onClick={() => clickedSingleContIdHendle(cate)}>
-                                                      <article>
-                                                         <FcInTransit />
-                                                      </article>
-                                                      {cate.name}
-                                                   </span>
-                                                   <span>
-                                                      {cate.min_percent}
-                                                   </span>
-                                                   <span>
-                                                      {cate.whole_percent}
-                                                   </span>
-                                                   <span>
-                                                      {cate.max_percent}
-                                                   </span>
-                                                   <span className='my_table_btns'>
-                                                      <button className='btn-edit' onClick={() => clickedIdHendle(cate.id)}>
-                                                         <FaRegEdit />
-                                                      </button>
-                                                      <button onClick={() => deleteCategoryHendle(cate.id, cate.name)}>
-                                                         <IoMdTrash />
-                                                      </button>
-                                                   </span>
-                                                </li>
-                                                )
-                                             )) : (
-                                             <Alert message="Warning" type="warning" showIcon />
-                                          )
-                                       }
-                                    </>
-                                 ) : (
-                                    <Skeleton />
-                                 )
-                              }
-                           </ul>
-                        </div>
-                     </div>
+                  <TabPane tab="Sub Sub Categories" key="3">
+                     <CategoriesList
+                        loaded={loaded}
+                        paginated={DoubleSubCategoryPaginated}
+                        count={count}
+                        pageSize={pageSize} 
+                        hendleChangePage={hendleChangePage}
+                        name="Sub Sub Category Name"
+                        rows={rows}
+                        clickedSingleObjHendle={clickedSingleObjHendle}
+                        clickedObjHendle={clickedObjHendle}
+                        deleteData={deleteCategoryHendle}
+                     />
                   </TabPane>
                </Tabs>
             </Paper>
@@ -350,8 +220,11 @@ function Categories() {
          >
             <Box className='modal_box'>
                <EditCategory
-                  id={clickedId}
+                  selectedCategory={selectedCategory}
                   setOpen={setOpen}
+                  setFrom={setFrom}
+                  handleClick={handleClick}
+                  setSuccess={setSuccess}
                   categories={categories}
                   setCategories={setCategories}
                   subCategories={subCategories}
@@ -373,6 +246,17 @@ function Categories() {
                />
             </Box>
          </Modal>
+         <MyAlert
+            notific={notific}
+            handleClose={handleCloseBackdrop}
+            from={from}
+            success={success}
+            errorMessage="Category not update"
+            successMessage="Category update"
+            deleted={deleted}
+            responseDeleteMessage="Category Deleted"
+            rejectDeleteMessage="Category Not deleted"
+         />
       </>
    )
 }

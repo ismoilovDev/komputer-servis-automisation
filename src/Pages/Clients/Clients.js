@@ -1,32 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import { Alert, Tabs } from 'antd';
-import { FcBusinessContact, FcBusinessman, FcInTransit } from "react-icons/fc";
-import { FaRegEdit } from "react-icons/fa";
-import { IoMdTrash } from "react-icons/io";
-import Skeleton from '../../components/Skeleton/Skeleton';
+import { Tabs } from 'antd';
 import http from '../../Services/getData';
 import { Modal, Box, Paper } from '@mui/material';
 import EditCompanyClient from '../../components/EditCompanyClient/EditCompanyClient';
 import EditPostman from '../../components/EditPostman/Editpostman';
 import SingleClient from '../../components/SingleClient/SingleClient';
-import Pagination from '../../components/Pagination/Pagination';
-import { paginate } from './../../utils/paginate';
+import ClientsList from '../../components/ClientsList/ClientsList'
+import { paginate } from '../../utils/paginate';
 import './Clients.css';
+import MyAlert from '../../components/MyAlert/MyAlert';
 
 
 const { TabPane } = Tabs;
-
 function Clients() {
+   const [loaded, setLoaded] = useState(false);
    const [compClients, setCompClients] = useState([]);
    const [clients, setClients] = useState([]);
    const [postmans, setPostmans] = useState([]);
-   const [loading, setLoading] = useState(false);
-   const [clickedId, setClickedId] = useState('');
+   const [selectedClient, setSelectedClient] = useState({});
+   const [selectedPostman, setSelectedPostman] = useState({});
    const [open, setOpen] = useState(false);
    const [openSingleCont, setOpenSingleCont] = useState(false);
    const [postmanId, setPostmanId] = useState("");
    const [clickAs, setClickAs] = useState(false);
    const [singleCont, setSingleCont] = useState({});
+   const [from, setFrom] = useState("");
+   const [success, setSuccess] = useState(false);
+   const [deleted, setDeleted] = useState(false);
+   const [notific, setNotific] = useState(false);
    const [currentPage, setCurrentPage] = useState(1);
    const [pageSize] = useState(8);
    let count = clients.length;
@@ -39,24 +40,39 @@ function Clients() {
 
    // Edit Modal --------------->
    const handleClose = () => setOpen(false);
-   const clickedIdHendle = (id) => {
+   const clickedObjHendle = (obj) => {
       setOpen(true);
-      setClickedId(id)
+      setSelectedClient(obj)
       setClickAs(false);
    }
-   const clickedPostmanIdHendle = (id) => {
+   const clickedPostmanObjHendle = (obj) => {
       setOpen(true);
-      setPostmanId(id);
+      setSelectedPostman(obj);
       setClickAs(true);
    }
 
 
    // Single Content Modal ------------->
    const handleSingleContClose = () => setOpenSingleCont(false);
-   const clickedSingleContIdHendle = (singleCate) => {
+   const clickedSingleObjHendle = (singleCate) => {
       setOpenSingleCont(true);
       setSingleCont(singleCate);
    }
+
+   // For Alert
+   const handleClick = () => {
+      setNotific(true);
+   };
+
+   const handleCloseBackdrop = (event, reason) => {
+      if (reason === 'clickaway') {
+         return;
+      }
+      setNotific(false)
+   };
+
+   const rows = ['Number', 'INN', 'Операции'];
+   const clientsRow = ['Number', 'Операции'];
 
 
    // Get All Clients
@@ -64,10 +80,10 @@ function Clients() {
       await http
          .get('/user/all')
          .then(res => {
-            setLoading(true)
             const allClients = res.data;
             setClients(allClients.filter(client => client.status === "J"));
             setCompClients(allClients.filter(client => client.status === "Y"));
+            setLoaded(true)
          })
          .catch()
    }
@@ -78,34 +94,44 @@ function Clients() {
          .get('/postman/all')
          .then(res => {
             setPostmans(res.data)
+            setLoaded(true)
          })
          .catch()
    }
 
    // Delete Client
    const deleteClientHendle = async (id, name) => {
-      if(window.confirm(`Delete ${name}`)) {
+      if (window.confirm(`Delete ${name}`)) {
          await http.delete(`/user/delete/${id}`)
             .then(res => {
                setCompClients(compClients.filter(item => item.id !== id));
                setClients(clients.filter(item => item.id !== id));
+               setFrom('delete');
+               setDeleted(true);
+               handleClick();
             })
             .catch(err => {
-
+               setFrom('delete');
+               setDeleted(false);
+               handleClick();
             })
       }
    }
 
    // Delete Postman
    const deletePostmanHendle = async (id, name) => {
-      if(window.confirm(`Delete ${name}`)) {
+      if (window.confirm(`Delete ${name}`)) {
          await http.delete(`/postman/delete/${id}`)
             .then(res => {
                setPostmans(postmans.filter(item => item.id !== id));
-               console.log('deleted');
+               setFrom('delete');
+               setDeleted(true);
+               handleClick();
             })
             .catch(err => {
-
+               setFrom('delete');
+               setDeleted(false);
+               handleClick();
             })
       }
    }
@@ -116,8 +142,10 @@ function Clients() {
       window.scroll(0, 0);
    }
    // Paginate
-   const paginated = paginate(clients, currentPage, pageSize)
-   const paginatedPostman = paginate(postmans, currentPage, pageSize)
+   const compClientsPaginated = paginate(compClients, currentPage, pageSize);
+   const clientsPaginated = paginate(clients, currentPage, pageSize);
+   const postmanPaginated = paginate(postmans, currentPage, pageSize);
+
    return (
       <>
          <div className='main px-2 px-md-3'>
@@ -127,194 +155,46 @@ function Clients() {
                </h2>
                <Tabs defaultActiveKey="1">
                   <TabPane tab="Yurudik" key="1">
-                     <div className='box'>
-                        <div className='my_table'>
-                           <ul>
-                              <li className='my_table_header'>
-                                 <span className='my_table_name'>
-                                    Company Name
-                                 </span>
-                                 <span>
-                                    Company Number
-                                 </span>
-                                 <span>
-                                    INN
-                                 </span>
-                                 <span className='my_table_btns'>
-                                    Операции
-                                 </span>
-                              </li>
-
-                              {/* Company Clients */}
-                              {
-                                 loading ? (
-                                    <>
-                                       {
-                                          compClients.length !== 0 ? (
-                                             compClients.map((comp, i) => (
-                                                <li key={i} className='my_table_body'>
-                                                   <span className='my_table_name' onClick={() => clickedSingleContIdHendle(comp)}>
-                                                      <article>
-                                                         <FcBusinessContact />
-                                                      </article>
-                                                      {comp.full_name}
-                                                   </span>
-                                                   <span>
-                                                      {comp.phone}
-                                                   </span>
-                                                   <span>
-                                                      {comp.inn}
-                                                   </span>
-                                                   <span className='my_table_btns'>
-                                                      <button className='btn-edit' onClick={() => clickedIdHendle(comp.id)}>
-                                                         <FaRegEdit />
-                                                      </button>
-                                                      <button onClick={() => deleteClientHendle(comp.id, comp.full_name)}>
-                                                         <IoMdTrash />
-                                                      </button>
-                                                   </span>
-                                                </li>
-                                             ))
-                                          ) : (
-                                             <Alert message="Warning" type="warning" showIcon />
-                                          )
-                                       }
-                                    </>
-                                 ) : (
-                                    <Skeleton />
-                                 )
-                              }
-                           </ul>
-                        </div>
-                     </div>
-                  </TabPane>
-                  <TabPane tab="Jismoniy" key="2">
-                     <div className='box'>
-                        <div className='my_table'>
-                           <ul>
-                              <li className='my_table_header'>
-                                 <span className='my_table_name'>
-                                    Name
-                                 </span>
-                                 <span>
-                                    Phone Number
-                                 </span>
-                                 <span className='my_table_btns'>
-                                    Операции
-                                 </span>
-                              </li>
-
-                              {/* Jismoniy clients */}
-                              {
-                                 loading ? (
-                                    <>
-                                       {
-                                          clients.length !== 0 ? (
-                                             paginated.map((item, index) => (
-                                                <li key={index} className='my_table_body'>
-                                                   <span className='my_table_name' onClick={() => clickedSingleContIdHendle(item)}>
-                                                      <article>
-                                                         <FcBusinessman />
-                                                      </article>
-                                                      {item.full_name}
-                                                   </span>
-                                                   <span>
-                                                      {item.phone}
-                                                   </span>
-                                                   <span className='my_table_btns'>
-                                                      <button className='btn-edit' onClick={() => clickedIdHendle(item.id)}>
-                                                         <FaRegEdit />
-                                                      </button>
-                                                      <button onClick={() => deleteClientHendle(item.id, item.full_name)}>
-                                                         <IoMdTrash />
-                                                      </button>
-                                                   </span>
-                                                </li>
-                                             ))
-                                          ) : (
-                                             <Alert message="Warning" type="warning" showIcon />
-                                          )
-                                       }
-                                    </>
-                                 ) : (
-                                    <Skeleton />
-                                 )
-                              }
-                           </ul>
-                        </div>
-                     </div>
-                     <Pagination
-                        countItems={count}
-                        pageSize={pageSize}
-                        onPageChange={hendleChangePage}
+                     <ClientsList
+                        loaded={loaded}
+                        paginated={compClientsPaginated}
+                        count={count}
+                        pageSize={pageSize} 
+                        hendleChangePage={hendleChangePage}
+                        name="Client Name"
+                        rows={rows}
+                        clickedSingleObjHendle={clickedSingleObjHendle}
+                        clickedObjHendle={clickedObjHendle}
+                        deleteData={deleteClientHendle}
                      />
                   </TabPane>
-                  <TabPane tab="Postman" key="3">
-                     <div className='box'>
-                        <Pagination
-                           countItems={countPostman}
-                           pageSize={pageSize}
-                           onPageChange={hendleChangePage}
-                        />
-                        <div className='my_table'>
-                           <ul>
-                              <li className='my_table_header'>
-                                 <span className='my_table_name'>
-                                    Company Name
-                                 </span>
-                                 <span>
-                                    Company Number
-                                 </span>
-                                 <span>
-                                    INN
-                                 </span>
-                                 <span className='my_table_btns'>
-                                    Операции
-                                 </span>
-                              </li>
-
-                              {/* Products */}
-                              {
-                                 loading ? (
-                                    <>
-                                       {
-                                          postmans.length !== 0 ? (
-                                             paginatedPostman.map((item, id) => (
-                                                <li key={id} className='my_table_body'>
-                                                   <span className='my_table_name' onClick={() => clickedSingleContIdHendle(item)}>
-                                                      <article>
-                                                         <FcInTransit />
-                                                      </article>
-                                                      {item.full_name}
-                                                   </span>
-                                                   <span>
-                                                      {item.phone}
-                                                   </span>
-                                                   <span>
-                                                      {item.inn}
-                                                   </span>
-                                                   <span className='my_table_btns'>
-                                                      <button className='btn-edit' onClick={() => clickedPostmanIdHendle(item.id)}>
-                                                         <FaRegEdit />
-                                                      </button>
-                                                      <button onClick={() => deletePostmanHendle(item.id, item.full_name)}>
-                                                         <IoMdTrash />
-                                                      </button>
-                                                   </span>
-                                                </li>
-                                                )
-                                             )) : (
-                                             <Alert message="Warning" type="warning" showIcon />
-                                          )
-                                       }
-                                    </>
-                                 ) : (
-                                    <Skeleton />
-                                    )
-                                 }
-                           </ul>
-                        </div>
-                     </div>
+                  <TabPane tab="Jismoniy" key="2">
+                     <ClientsList
+                        loaded={loaded}
+                        paginated={clientsPaginated}
+                        count={count}
+                        pageSize={pageSize} 
+                        hendleChangePage={hendleChangePage}
+                        name="Client Name"
+                        rows={clientsRow}
+                        clickedSingleObjHendle={clickedSingleObjHendle}
+                        clickedObjHendle={clickedObjHendle}
+                        deleteData={deleteClientHendle}
+                     />
+                  </TabPane>
+                  <TabPane tab="Postmans" key="3">
+                     <ClientsList
+                        loaded={loaded}
+                        paginated={postmanPaginated}
+                        count={countPostman}
+                        pageSize={pageSize} 
+                        hendleChangePage={hendleChangePage}
+                        name="Postman Name"
+                        rows={rows}
+                        clickedSingleObjHendle={clickedSingleObjHendle}
+                        clickedObjHendle={clickedPostmanObjHendle}
+                        deleteData={deletePostmanHendle}
+                     />
                   </TabPane>
                </Tabs>
             </Paper>
@@ -329,14 +209,20 @@ function Clients() {
                {
                   clickAs ? (
                      <EditPostman
-                        id={postmanId}
+                        selectedPostman={selectedPostman}
+                        setFrom={setFrom}
+                        handleClick={handleClick}
+                        setSuccess={setSuccess}
                         setOpen={setOpen}
                         postmans={postmans}
                         setPostmans={setPostmans}
                      />
                   ) : (
                      <EditCompanyClient
-                        id={clickedId}
+                        selectedClient={selectedClient}
+                        setFrom={setFrom}
+                        handleClick={handleClick}
+                        setSuccess={setSuccess}
                         setOpen={setOpen}
                         clients={clients}
                         setClients={setClients}
@@ -359,6 +245,17 @@ function Clients() {
                />
             </Box>
          </Modal>
+         <MyAlert
+            notific={notific}
+            handleClose={handleCloseBackdrop}
+            from={from}
+            success={success}
+            errorMessage="Client not update"
+            successMessage="Client update"
+            deleted={deleted}
+            responseDeleteMessage="Client Deleted"
+            rejectDeleteMessage="Client Not deleted"
+         />
       </>
    )
 }

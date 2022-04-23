@@ -6,34 +6,27 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Alert } from 'antd';
 
 function EditCompanyClient({
-   id,
+   selectedClient,
    compClients,
    setCompClients,
    clients,
    setClients,
    setOpen,
+   handleClick,
+   setSuccess,
+   setFrom
 }) {
+
    const [clicked, setClicked] = useState(false)
    const [hasError, setHasError] = useState(false)
    const [phone, setPhone] = useState('');
    const [name, setName] = useState('');
 
    useEffect(() => {
-      const getSingleClient = async () => {
-         await http
-            .get(`/user/single/${id}`)
-            .then (res => {
-               console.log(res);
-               setName(res.data.full_name);
-               setPhone(res.data.phone);
-            })
-            .catch(err => {
-               console.log(err);
-            })
-      }
-      getSingleClient()
+      setName(selectedClient.full_name);
+      setPhone(selectedClient.phone);
    }, // eslint-disable-next-line
-      [id])
+      [])
 
 
    // Update Client
@@ -46,13 +39,13 @@ function EditCompanyClient({
          full_name: name
       }
       http
-         .patch(`/user/update/${id}`, data)
+         .patch(`/user/update/${selectedClient.id}`, data)
          .then(res => {
             setClicked(false);
 
             // Edited Company Clients List
             const editedCompClients = compClients.filter(item => {
-               if(item.id === id) {
+               if(item.id === selectedClient.id) {
                   item.phone = phone;
                   item.full_name = name;
                }
@@ -62,18 +55,23 @@ function EditCompanyClient({
 
             // Edited Clients List
             const editedClients = clients.filter(item => {
-               if(item.id === id) {
+               if(item.id === selectedClient.id) {
                   item.phone = phone;
                   item.full_name = name;
                }
                return item;
             })
             setClients(editedClients);
-            setOpen(false)
+            setOpen(false);
+            setFrom('update');
+            setSuccess(true);
+            handleClick();
          })
          .catch(err => {
             setClicked(false);
-            setHasError(true)
+            setHasError(true);
+            setFrom('update');
+            setSuccess(false);
          })
    }
    return (

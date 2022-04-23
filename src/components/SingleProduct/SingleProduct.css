@@ -1,0 +1,59 @@
+.single_product {
+   width: 100%;
+   padding: 15px;
+}
+
+
+.single_product p {
+   font-size: 0.9rem;
+}
+
+.single_product p svg {
+   font-size: 25px;
+   margin-right: 10px;
+}
+
+.single_product p span {
+   display: inline-block;
+   font-size: 15px;
+   font-weight: 600;
+   font-style: normal;
+   margin-right: 10px;
+}
+
+.single_product .product_name {
+   font-size: 1.1rem;
+   font-weight: 600;
+}
+
+p.brand svg {
+   background-color: #1128db;
+}
+
+p.price svg {
+   color: #fff;
+   background-color: #838383;
+}
+
+p.unit svg {
+   background-color: #f5ee38;
+}
+
+
+@media (min-width: 992px) {
+   .single_product p {
+      font-size: 1.2rem;
+   }
+
+   .single_product p span {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 600;
+   }
+   .single_product .product_name {
+      font-size: 1.3rem;
+   }
+   .single_product p svg {
+      font-size: 35px;
+   }
+}

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { MdError } from "react-icons/md";
-import '../SingleClient/SingleClient.css';
+import { BsArrowDownCircle, BsArrowUpCircle, BsArrowRepeat } from "react-icons/bs";
+import './SingleCategory.css';
 
 function SingleCategory({ singleCont }) {
    const [name, setName] = useState('')
@@ -19,11 +20,17 @@ function SingleCategory({ singleCont }) {
       [])
 
    return (
-      <div className='single_client'>
-         <p><b>Name: </b> {name ? name : hasError ? <MdError className='text-red' /> : <LoadingOutlined className='px-3' />}</p>
-         <p><b>Min: </b> {minProcent ? minProcent : hasError ? <MdError className='text-red' /> : <LoadingOutlined className='px-3' />}</p>
-         <p><b>Whole: </b> {wholeProcent ? wholeProcent : hasError ? <MdError className='text-red' /> : <LoadingOutlined className='px-3' />}</p>
-         <p><b>Max: </b> {maxProcent ? maxProcent : hasError ? <MdError className='text-red' /> : <LoadingOutlined className='px-3' />}</p>
+      <div className='single_product'>
+         <p className='product_name'>{name ? name : hasError ? <MdError className='text-red' /> : <LoadingOutlined className='px-3' />}</p><hr/>
+         <p className='max_price'>
+            <BsArrowUpCircle /><span>Max procent: </span>{maxProcent ? maxProcent: "No Protsent"}
+         </p>
+         <p className='min_price'>
+            <BsArrowDownCircle /><span>Min procent: </span>{minProcent ? minProcent: "No Protsent"}
+         </p>
+         <p className='whole_price'>
+            <BsArrowRepeat /><span>Whole procent: </span>{wholeProcent ? wholeProcent: "No Protsent"}
+         </p>
       </div>
    )
 }

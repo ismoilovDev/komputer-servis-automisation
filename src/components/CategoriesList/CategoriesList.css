@@ -1,0 +1,93 @@
+span.my_list_btns {
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: end;
+   align-items: center;
+}
+button {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: #f13050;
+   padding: 7px 8px;
+   border-radius: 3px;
+   margin-left: 15px;
+   outline: none;
+   border: none;
+   transform: scale(1);
+   transition: .25s transform linear;
+   font-size: 10px;
+}
+
+button:hover {
+   transform: scale(1.08);
+}
+
+.btn-edit {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   background-color: #6060df;
+   padding: 7px 8px;
+   margin-left: 0;
+   border-radius: 3px;
+   color: #ffffff;
+   transform: scale(1);
+   transition: .25s transform linear;
+}
+
+.btn-edit:hover {
+   transform: scale(1.08);
+}
+
+button svg {
+   font-size: 18px;
+   color: #fff;
+}
+
+.empty-data {
+   width: 30%;
+}
+
+.no-data {
+   display: inline-block;
+   border: 3px solid #cacaca;
+   font-size: 4.5rem;
+   color: #bbbbbb;
+   font-weight: 300;
+   border-radius: 5px;
+   padding: 6px 7px;
+   margin: 10px 0 5px;
+}
+
+.no-data ~ span {
+   display: block;
+   position: relative;
+   margin-bottom: 10px;
+   font-size: 1.1rem;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+@media (min-width: 556px) {
+   .empty-data {
+      width: 30%;
+   }
+}
+@media (min-width: 768px) {
+   .empty-data {
+      width: 50%;
+   }
+}
+
+@media (min-width: 992px) {
+   .empty-data {
+      width: 60%;
+   }
+}
+
+@media (min-width: 1200px) {
+   .empty-data {
+      width: 100%;
+   }
+}

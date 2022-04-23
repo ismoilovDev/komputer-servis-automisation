@@ -29,7 +29,7 @@ function Routing() {
         <Sidebar />
         <Switch>
           <Route exact path="/">
-            <AddBaskets />
+            <AddBaskets setToken={setToken} />
           </Route>
           <Route path="/add-categories">
             <AddCategories />
@@ -56,6 +56,7 @@ function Routing() {
         </Switch>
         <Drawer />
       </Router>
+
     </div>
   );
 }

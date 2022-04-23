@@ -141,9 +141,10 @@ function AddCategories() {
          <MyAlert
             notific={notific}
             handleClose={handleClose}
-            success={success}
-            errorMessage="Категория не добавлена"
-            successMessage="Добавлена категория"
+            from="create"
+            created={success}
+            unCreatedMessage="Категория не добавлена"
+            createdMessage="Добавлена категория"
          />
       </>
    )

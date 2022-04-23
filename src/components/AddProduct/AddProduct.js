@@ -221,7 +221,6 @@ function AddProduct({
                         value={brand}
                         onChange={(e) => { setBrand(e.target.value) }}
                         placeholder="Компьютер"
-                        required
                      />
                   </FormControl>
                </Col>

@@ -6,10 +6,13 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { Alert } from 'antd';
 
 function EditPostman({
-   id,
+   selectedPostman,
    postmans,
    setPostmans,
    setOpen,
+   handleClick,
+   setSuccess,
+   setFrom
 }) {
    const [clicked, setClicked] = useState(false)
    const [hasError, setHasError] = useState(false)
@@ -19,23 +22,12 @@ function EditPostman({
    const [descpr, setDescpr] = useState('');
 
    useEffect(() => {
-      const getSingleClient = async () => {
-         await http
-            .get(`/postman/single/${id}`)
-            .then (res => {
-               console.log(res);
-               setName(res.data.full_name);
-               setPhone(res.data.phone);
-               setInn(res.data.inn);
-               setDescpr(res.data.description);
-            })
-            .catch(err => {
-               console.log(err);
-            })
-      }
-      getSingleClient()
+      setName(selectedPostman.full_name);
+      setPhone(selectedPostman.phone);
+      setInn(selectedPostman.inn);
+      setDescpr(selectedPostman.description);
    }, // eslint-disable-next-line
-      [id])
+      [])
 
 
    // Update Client
@@ -50,13 +42,13 @@ function EditPostman({
          description: descpr
       }
       http
-         .put(`/postman/update/${id}`, data)
+         .put(`/postman/update/${selectedPostman.id}`, data)
          .then(res => {
             setClicked(false);
 
             // Edited Company Clients List
             const allPostmans = postmans.filter(item => {
-               if(item.id === id) {
+               if(item.id === selectedPostman.id) {
                   item.phone = phone;
                   item.full_name = name;
                   item.inn = inn;
@@ -65,11 +57,16 @@ function EditPostman({
                return item;
             })
             setPostmans(allPostmans)
-            setOpen(false)
+            setOpen(false);
+            setFrom('update');
+            setSuccess(true);
+            handleClick();
          })
          .catch(err => {
             setClicked(false);
-            setHasError(true)
+            setHasError(true);
+            setFrom('update');
+            setSuccess(false);
          })
    }
    return (

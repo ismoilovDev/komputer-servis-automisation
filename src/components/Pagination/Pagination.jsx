@@ -8,7 +8,7 @@ const Paginations = ({ countItems, pageSize, onPageChange }) => {
    return (
       <ul className="pagination">
          <Stack spacing={2}>
-            <Pagination count={pageCount} onChange={(e) => onPageChange(e.target.textContent)} color="primary" hideNextButton hidePrevButton />
+            <Pagination count={pageCount} onChange={(e) => onPageChange(e.target.textContent)} variant="outlined" shape="rounded" color="primary" hideNextButton hidePrevButton />
          </Stack>
       </ul>
    );

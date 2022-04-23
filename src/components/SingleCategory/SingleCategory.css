@@ -1,0 +1,61 @@
+.single_product {
+   width: 100%;
+   padding: 15px;
+}
+
+
+.single_product p {
+   font-size: 0.9rem;
+}
+
+.single_product p svg {
+   font-size: 25px;
+   margin-right: 10px;
+   color: #fff;
+}
+
+.single_product p span {
+   display: inline-block;
+   font-size: 15px;
+   font-weight: 600;
+   font-style: normal;
+   margin-right: 10px;
+}
+
+.single_product .product_name {
+   font-size: 1.1rem;
+   font-weight: 600;
+}
+
+p.max_price svg {
+   background-color: #2ec600;
+}
+
+p.min_price svg {
+   background-color: #f90808;
+}
+
+p.whole_price svg {
+   background-color: rgb(227, 227, 5);
+}
+
+
+
+
+@media (min-width: 992px) {
+   .single_product p {
+      font-size: 1.2rem;
+   }
+
+   .single_product p span {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 600;
+   }
+   .single_product .product_name {
+      font-size: 1.3rem;
+   }
+   .single_product p svg {
+      font-size: 35px;
+   }
+}

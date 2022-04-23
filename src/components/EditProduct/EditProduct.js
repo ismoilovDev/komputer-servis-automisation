@@ -9,32 +9,56 @@ function EditProduct ({
    products,
    setProducts,
    selectedProduct,
-   setOpen
+   setOpen,
+   handleClick,
+   setSuccess,
+   setFrom
 }) {
    const [clicked, setClicked] = useState(false)
    const [hasError, setHasError] = useState(false)
    const [name, setName] = useState('');
    const [categoryId, setCategoryId] = useState('');
-   const [minPrice, setMinPrice] = useState('');
-   const [maxPrice, setMaxPrice] = useState('');
-   const [wholePrice, setWholePrice] = useState('');
    const [price, setPrice] = useState('');
+   const [minCount, setMinCount] = useState('');
    const [brand, setBrand] = useState('');
    const [unit, setUnit] = useState('')
+   // SUM ----------->
+   const [minSum, setMinSum] = useState('');
+   const [maxSum, setMaxSum] = useState('');
+   const [wholeSum, setWholeSum] = useState('');
+   // Protsent ---------->
+   const [minPrecent, setMinPercent] = useState('');
+   const [maxPercent, setMaxPercent] = useState('');
+   const [wholePercent, setWholePercent] = useState('');
+
 
    useEffect(() => {
       setName(selectedProduct.name);
       setBrand(selectedProduct.brand);
-      setPrice(selectedProduct.cost_price);
-      setMinPrice(selectedProduct.min_price);
-      setWholePrice(selectedProduct.whole_price);
-      setMaxPrice(selectedProduct.max_price);
       setUnit(selectedProduct.unit);
       setCategoryId(selectedProduct.category_id);
+      setMinCount(selectedProduct.min_count)
+      // Sum --------------->
+      setPrice(selectedProduct.cost_price);
+      setMinSum(selectedProduct.min_price);
+      setWholeSum(selectedProduct.whole_price);
+      setMaxSum(selectedProduct.max_price);
+      // Procent ------------->
+      setMinPercent(selectedProduct.category.min_percent)
+      setMaxPercent(selectedProduct.category.max_percent)
+      setWholePercent(selectedProduct.category.whole_percent)
    }, // eslint-disable-next-line
       [])
-   console.log(categoryId);
 
+   function changePrice(price) {
+      let summ = Number(price)
+      if (price !== 0 && price > -1 && minPrecent && maxPercent && wholePercent) {
+         setPrice(price);
+         setMinSum(summ + summ * (minPrecent / 100));
+         setMaxSum(summ + summ * (maxPercent / 100));
+         setWholeSum(summ + summ * (wholePercent / 100));
+      }
+   }
    // Update Category
    const updateCategory = (e) => {
       e.preventDefault()
@@ -46,9 +70,10 @@ function EditProduct ({
             name: name,
             brand: brand,
             cost_price: price,
-            min_price: minPrice,
-            max_price: maxPrice,
-            whole_price: wholePrice,
+            min_price: minSum,
+            max_price: maxSum,
+            whole_price: wholeSum,
+            min_count: minCount,
             unit: unit
          }
       }
@@ -63,19 +88,25 @@ function EditProduct ({
                   item.name = name;
                   item.brand = brand;
                   item.cost_price = price;
-                  item.min_price = minPrice;
-                  item.whole_price = wholePrice;
-                  item.max_price = maxPrice;
+                  item.min_price = minSum;
+                  item.whole_price = wholeSum;
+                  item.max_price = maxSum;
+                  item.min_count = minCount;
                   item.unit = unit;
                }
                return item;
             })
             setProducts(editedProduct);
-            setOpen(false)
+            setOpen(false);
+            setFrom('update');
+            setSuccess(true);
+            handleClick();
          })
          .catch(err => {
+            setFrom('update');
+            setSuccess(false);
             setClicked(false);
-            setHasError(true)
+            setHasError(true);
          })
    }
    return (
@@ -121,7 +152,7 @@ function EditProduct ({
                         />
                      </FormControl>
                   </Col>
-                  <Col xs="12">
+                  <Col xs="12" md="6" >
                      <FormControl className='w-100 my-2'>
                         <TextField
                            size="small"
@@ -143,11 +174,27 @@ function EditProduct ({
                            size="small"
                            className="w-100 for-label mb-3"
                            type="number"
+                           id="tavar"
+                           variant="standard"
+                           label="Min Product"
+                           value={minCount}
+                           onChange={(e) => setMinCount(e.target.value)}
+                           placeholder="20"
+                           required
+                        />
+                     </FormControl>
+                  </Col>
+                  <Col xs="12" md="6">
+                     <FormControl className='w-100 my-2'>
+                        <TextField
+                           size="small"
+                           className="w-100 for-label mb-3"
+                           type="number"
                            id="cost_price"
                            variant="standard"
                            label="Cost Sum"
                            value={price}
-                           onChange={(e) => { setPrice(e.target.value) }}
+                           onChange={(e) => { changePrice(e.target.value) }}
                            placeholder="20"
                         />
                      </FormControl>
@@ -161,8 +208,7 @@ function EditProduct ({
                            id="min_price"
                            variant="standard"
                            label="Min Sum"
-                           value={minPrice}
-                           onChange={(e) => { setMinPrice(e.target.value) }}
+                           value={minSum}
                            placeholder="20"
                         />
                      </FormControl>
@@ -176,8 +222,7 @@ function EditProduct ({
                            id="whole_price"
                            variant="standard"
                            label="Optom Sum"
-                           value={wholePrice}
-                           onChange={(e) => { setWholePrice(e.target.value) }}
+                           value={wholeSum}
                            placeholder="17"
                         />
                      </FormControl>
@@ -191,8 +236,7 @@ function EditProduct ({
                            id="max_price"
                            variant="standard"
                            label="Max Sum"
-                           value={maxPrice}
-                           onChange={(e) => { setMaxPrice(e.target.value) }}
+                           value={maxSum}
                            placeholder="25"
                         />
                      </FormControl>

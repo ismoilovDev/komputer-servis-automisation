@@ -1,7 +1,7 @@
-import { Backdrop, CircularProgress, Paper } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import AddProduct from '../../components/AddProduct/AddProduct';
+import { Backdrop, CircularProgress, Paper } from '@mui/material';
 import MyAlert from '../../components/MyAlert/MyAlert';
+import AddProduct from '../../components/AddProduct/AddProduct';
 import http from '../../Services/getData';
 
 function AddProducts() {
@@ -269,9 +269,10 @@ function AddProducts() {
          <MyAlert
             notific={notific}
             handleClose={handleCloseBackdrop}
-            success={success}
-            errorMessage="Product не добавлена"
-            successMessage="Product добавлена"
+            from="create"
+            created={success}
+            unCreatedMessage="Product не добавлена"
+            createdMessage="Product добавлена"
          />
       </>
    )

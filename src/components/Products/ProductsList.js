@@ -37,7 +37,7 @@ function ProductsList({ orders, setOrders, products, deleteOrder }) {
       <>
          <div className='product-list my-3'>
             <div className='box'>
-               <div className='my_table'>
+               <div className='my_table list'>
                   <ul>
                      <li className='my_table_header'>
                         <span className='my_table_name'>

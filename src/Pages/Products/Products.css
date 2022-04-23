@@ -23,6 +23,7 @@
 
 .box {
    width: 100%;
+   min-width: 100%;
    padding: 15px 15px 2px 15px;
    border-radius: 4px;
    background: #FCF6F0;
@@ -32,12 +33,19 @@
 .my_table {
    position: relative;
    width: 100%;
+   min-width: 100%;
    min-height: 500px;
    overflow-x: scroll;
 }
+.my_table.list {
+   min-height: 0;
+}
 
 .my_table ul {
-   min-width: 100%;
+   width: 100%;
+}
+.my_table ul li {
+   width: 100%;
 }
 .my_table button {
    border-radius: 5px !important;
@@ -86,13 +94,16 @@
 }
 
 .my_table ul li.my_table_body {
-   /* min-width: 100%; */
+   max-width: 100%;
    display: flex;
    height: 100%;
    align-items: center;
    flex-wrap: nowrap;
    padding: 10px 0;
    /* animation: tableElemAnimation .2s linear; */
+}
+.my_table ul li.my_table_body:nth-child(odd) {
+   background-color: #c1cedb;
 }
 
 .my_table_body span {
@@ -115,11 +126,12 @@ span.my_table_btns, span.my_table_count {
 
 .product-list span.my_table_btns {
    min-width: 70px;
+   height: 100%;
    justify-content: flex-end;
    padding-right: 25px;
 }
 
-.my_table_btns button {
+button {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -134,11 +146,11 @@ span.my_table_btns, span.my_table_count {
    font-size: 10px;
 }
 
-.my_table_btns button:hover {
+button:hover {
    transform: scale(1.08);
 }
 
-.my_table_btns .btn-edit {
+.btn-edit {
    display: flex;
    justify-content: center;
    align-items: center;
@@ -155,7 +167,7 @@ span.my_table_btns, span.my_table_count {
    transform: scale(1.08);
 }
 
-.my_table_btns button svg {
+button svg {
    font-size: 18px;
    color: #fff;
 }

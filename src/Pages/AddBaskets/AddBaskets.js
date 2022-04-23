@@ -2,12 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Backdrop, Box, Button, CircularProgress, FormControl, InputLabel, MenuItem, Modal, OutlinedInput, Paper, Select } from '@mui/material';
 import { Col, Container, FloatingLabel, Form, Row } from 'react-bootstrap';
 import AddBasket from '../../components/AddBasket/AddBasket'
-import ProductsList from './../../components/Table/ProductsList';
+import ProductsList from './../../components/Products/ProductsList';
 import http from './../../Services/getData';
 import './AddBaskets.css';
 import MyAlert from '../../components/MyAlert/MyAlert';
 
-function Test() {
+function Test({ setToken }) {
    const [products, setProducts] = useState([]);
    const [orders, setOrders] = useState([]);
    const [postmans, setPostmans] = useState([]);
@@ -18,9 +18,9 @@ function Test() {
    const [display, setDisplay] = useState(false);
    const [success, setSuccess] = useState(false);
    const [notific, setNotific] = useState(false);
+   const [usdAllSum, setUsdAllSum] = useState(0)
+   const [uzsAllSum, setUzsAllSum] = useState(0)
    const wrapperRef = useRef(null);
-
-
    // For Alert
    const handleClick = () => {
       setNotific(true);
@@ -55,10 +55,14 @@ function Test() {
          .get('/product/all')
          .then(res => {
             setProducts(res.data)
-            console.log(res.data);
          })
          .catch(err => {
-            console.log(err)
+            console.log(err.response)
+            if(err.response.data.message === "Unauthenticated." || err.response.status === 401) {
+               window.localStorage.clear()
+               setToken("")
+               window.location.reload(false);
+            }
          })
    }
 
@@ -95,7 +99,12 @@ function Test() {
 
    function filteredData() {
       const filteredOrders = orders.filter(item => {
-         let { product_id, count, unit, price, description } = item;
+         let product_id = item.product_id;
+         let count = item.count;
+         let unit = item.unit;
+         let price = item.price;
+         let description = item.description;
+         delete item.id;
          return {
             product_id,
             count,
@@ -104,16 +113,20 @@ function Test() {
             description
          }
       })
+      console.log(filteredOrders);
       return filteredOrders
    }
 
    // Add Basket //---------->
    const addBaketHendle = (e) => {
       e.preventDefault();
+      console.log(usdAllSum);
       handleOpen()
       if(filteredData().length !== 0) {
          const data = {
             postman_id: postmanId,
+            usd: 23000,
+            uzs: 300000,
             description: description,
             orders: filteredData()
          }
@@ -241,6 +254,10 @@ function Test() {
                   wrapperRef={wrapperRef}
                   products={products}
                   setProducts={setProducts}
+                  usdAllSum={usdAllSum}
+                  setUsdAllSum={setUsdAllSum}
+                  uzsAllSum={uzsAllSum}
+                  setUzsAllSum={setUzsAllSum}
                />
             </Box>
          </Modal>
@@ -253,9 +270,10 @@ function Test() {
          <MyAlert
             notific={notific}
             handleClose={handleCloseBackdrop}
-            success={success}
-            errorMessage="Zayavka не добавлена"
-            successMessage="Zayavka категория"
+            from="create"
+            created={success}
+            unCreatedMessage="Zayavka не добавлена"
+            createdMessage="Zayavka категория"
             emptyMessage="Pustoy zayavka"
          />
       </>

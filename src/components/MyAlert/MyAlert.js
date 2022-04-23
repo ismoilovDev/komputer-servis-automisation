@@ -15,8 +15,45 @@ const useStyles = makeStyles({
       transition: '.3s',
    }
 });
-function MyAlert({ success, notific, handleClose, errorMessage, successMessage, emptyMessage }) {
+function MyAlert({
+   from,
+   success,
+   notific, 
+   handleClose, 
+   errorMessage, 
+   successMessage, 
+   emptyMessage,
+   deleted,
+   responseDeleteMessage,
+   rejectDeleteMessage,
+   created,
+   createdMessage,
+   unCreatedMessage
+}) {
    const classes = useStyles();
+   const renderAlert = () => {
+      if (from === "update") {
+         return (
+            <Alert className={classes.snack} onClose={handleClose} variant="filled" severity={success ? "success": "error"}>
+               { success ? (success ? successMessage : errorMessage) : emptyMessage }
+            </Alert>
+         )
+      }
+      if (from === "delete") {
+         return (
+            <Alert className={classes.snack} onClose={handleClose} variant="filled" severity={deleted ? "success": "error"}>
+               { deleted ? responseDeleteMessage : rejectDeleteMessage }
+            </Alert>
+         )
+      }
+      if (from === "create") {
+         return (
+            <Alert className={classes.snack} onClose={handleClose} variant="filled" severity={created ? "success": "error"}>
+               { created ? createdMessage : unCreatedMessage }
+            </Alert>
+         )
+      }
+   }
    return (
       <Snackbar
          className={classes.snack}
@@ -27,11 +64,9 @@ function MyAlert({ success, notific, handleClose, errorMessage, successMessage, 
             vertical: 'top',
             horizontal: 'center'
          }}>
-         <Alert className={classes.snack} onClose={handleClose} variant="filled" severity={success ? "success": "error"}>
             {
-               success ? (success ? successMessage : errorMessage) : emptyMessage
+               renderAlert()
             }
-         </Alert>
       </Snackbar>
    )
 }
