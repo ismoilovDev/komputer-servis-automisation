@@ -85,6 +85,7 @@ function Test({ setToken }) {
          document.removeEventListener('mousedown', handleClickOutside)
       }
    }, []);
+   
    const handleClickOutside = (e) => {
       const { current: wrap } = wrapperRef;
       if (wrap && !wrap.contains(e.target)) {
@@ -95,6 +96,7 @@ function Test({ setToken }) {
    // Delete Order ------------>
    const deleteOrder = (id) => {
       setOrders(orders.filter(item => item.id !== id))
+      addSum(orders);
    }
 
    function filteredData() {
@@ -113,20 +115,30 @@ function Test({ setToken }) {
             description
          }
       })
-      console.log(filteredOrders);
       return filteredOrders
+   }
+   
+   const addSum = (data) => {
+      data.forEach(order => {
+         if(order.unit === "USD") {
+            setUsdAllSum(usdAllSum => (order.price * order.count) + usdAllSum);
+         }
+         if(order.unit === "UZS") {
+            setUzsAllSum(uzsAllSum => (order.price * order.count) + uzsAllSum);
+         }
+      })
    }
 
    // Add Basket //---------->
    const addBaketHendle = (e) => {
       e.preventDefault();
-      console.log(usdAllSum);
       handleOpen()
-      if(filteredData().length !== 0) {
+      if (filteredData().length !== 0) {
+         addSum(orders);
          const data = {
             postman_id: postmanId,
-            usd: 23000,
-            uzs: 300000,
+            usd: usdAllSum,
+            uzs: uzsAllSum,
             description: description,
             orders: filteredData()
          }
@@ -162,6 +174,8 @@ function Test({ setToken }) {
                <h2 className='d-flex justify-content-center mb-4'>
                   Создание заявки
                </h2>
+               <p>USD: {usdAllSum}</p>
+               <p>UZS: {uzsAllSum}</p>
                <Container>
                   <Row>
                      <Form onSubmit={addBaketHendle} autoComplete="off">
@@ -254,10 +268,7 @@ function Test({ setToken }) {
                   wrapperRef={wrapperRef}
                   products={products}
                   setProducts={setProducts}
-                  usdAllSum={usdAllSum}
-                  setUsdAllSum={setUsdAllSum}
-                  uzsAllSum={uzsAllSum}
-                  setUzsAllSum={setUzsAllSum}
+                  addSum={addSum}
                />
             </Box>
          </Modal>

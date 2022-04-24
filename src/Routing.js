@@ -16,6 +16,7 @@ import Products from './Pages/Products/Products'
 import Login from './Pages/Login/Login';
 import Clients from './Pages/Clients/Clients';
 import SelectedProducts from './Pages/SelectedProducts/SelectedProducts';
+import BasketsHistory from './Pages/BasketsHistory/BasketsHistory';
 
 
 function Routing() {
@@ -52,6 +53,9 @@ function Routing() {
           <Route path="/selected-products/:id" component={SelectedProducts} />
           <Route path="/clients">
             <Clients />
+          </Route>
+          <Route path="/all-baskets">
+            <BasketsHistory />
           </Route>
         </Switch>
         <Drawer />

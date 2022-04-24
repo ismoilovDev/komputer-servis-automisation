@@ -26,7 +26,7 @@ const useStyles = makeStyles({
    }
 });
 
-function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRef, products, usdAllSum, setUsdAllSum, setUzsAllSum }) {
+function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRef, products, addSum }) {
    const classes = useStyles();
    const [productId, setProductId] = useState('');
    const [productName, setProductName] = useState('');
@@ -36,11 +36,6 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
    const [description, setDescription] = useState('')
    const tabIndex = useTabIndex();
 
-   const addSum = (data) => {
-      if(data.unit === "USD") {
-         setUsdAllSum(usdAllSum => usdAllSum + Number(data.price))
-      }
-   }  
    // Add Order
    const addOrder = (e) => {
       e.preventDefault()
@@ -58,7 +53,6 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
          price: price,
          description: description
       }
-      addSum(data)
       setOrders(prev => [...prev, data]);
 
       setPrice("")
@@ -67,6 +61,7 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
       setUnit("")
       setCount("")
       setDescription("")
+      addSum(orders)
    }
 
    const setSelectCate = (proName, id) => {
