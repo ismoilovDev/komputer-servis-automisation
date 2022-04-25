@@ -24,6 +24,7 @@ import { Link } from 'react-router-dom';
 import { Collapse, ListItemButton, Tooltip, Alert } from '@mui/material';
 import { FaUsers, FaUserCircle } from 'react-icons/fa';
 import { HiOutlineUserAdd } from 'react-icons/hi';
+import { VscHistory } from "react-icons/vsc";
 import { makeStyles } from '@mui/styles';
 import http from '../../Services/getData';
 import './Sidebar.css';
@@ -150,6 +151,14 @@ function ResponsiveDrawer(props) {
                         <FaUsers className={classes.linkSvg} />
                      </ListItemIcon>
                      <ListItemText primary='Клиенты' />
+                  </ListItem>
+               </Link>
+               <Link to="/all-baskets">
+                  <ListItem button>
+                     <ListItemIcon className="my_link">
+                        <VscHistory className={classes.linkSvg} />
+                     </ListItemIcon>
+                     <ListItemText primary='Zayavki history' />
                   </ListItem>
                </Link>
             </List>

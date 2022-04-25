@@ -42,18 +42,18 @@ const BasketsHistory = () => {
    return (
       <div className='main px-2 px-md-3'>
          <Paper elevation={2} className="py-3 px-2">
-            <Row className='justify-content-between align-items-center'>
+            <Row className='justify-content-between align-items-center px-2'>
                <Col xs="5">
                   <BasicDateRangePicker />
                </Col>
-               <Col xs="7" className='px-md-5'>
+               <Col xs="7" className='d-flex align-items-center'>
                   <FormControl className='w-100'>
                      <TextField
                         size="small"
-                        className="w-100 for-label mb-3"
+                        className="w-100 for-label"
                         type="text"
                         id="tavar"
-                        variant="standard"
+                        variant="outlined"
                         label="Search..."
                         value={search}
                         autoComplete="off"
@@ -64,7 +64,7 @@ const BasketsHistory = () => {
                   </FormControl>
                </Col>
             </Row>
-            <Row className='px-2 mt-4'>
+            <Row className='px-2 mt-5'>
                <BasketsList 
                   loaded={loaded}
                   paginated={paginated}
