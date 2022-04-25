@@ -1,19 +1,79 @@
-import { Paper } from '@mui/material';
-import React from 'react';
+import { FormControl, Paper, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import BasketsList from '../../components/BasketsList/BasketsList';
 import BasicDateRangePicker from '../../components/DatePicker/DatePicker';
+import http from '../../Services/getData';
+import { paginate } from '../../utils/paginate';
 
 const BasketsHistory = () => {
+
+   const [loaded, setLoaded] = useState(false);
+   const [search, setSearch] = useState("")
+   const [baskets, setBaskets] = useState([]);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [pageSize] = useState(10);
+   let count = baskets.length;
+
+   useEffect(() => {
+      const getAllProduct = async () => {
+         await http
+            .get('/warehouse-basket/all')
+            .then(res => {
+               console.log(res.data);
+               setBaskets(res.data)
+               setLoaded(true)
+            })
+            .catch(err => {
+               console.log(err);
+            })
+      }
+      getAllProduct()
+   }, [])
+   const row = [ "Price UZS", "Price USD", "description", "Operations" ];
+   
+   // Change Page
+   const hendleChangePage = (page) => {
+      setCurrentPage(page)
+      window.scroll(0, 0);
+   }
+   // Paginate
+   const paginated = paginate(baskets, currentPage, pageSize)
    return (
       <div className='main px-2 px-md-3'>
          <Paper elevation={2} className="py-3 px-2">
-            <Row>
-               <Col>
+            <Row className='justify-content-between align-items-center'>
+               <Col xs="5">
                   <BasicDateRangePicker />
                </Col>
-               <Col>
-                  
+               <Col xs="7" className='px-md-5'>
+                  <FormControl className='w-100'>
+                     <TextField
+                        size="small"
+                        className="w-100 for-label mb-3"
+                        type="text"
+                        id="tavar"
+                        variant="standard"
+                        label="Search..."
+                        value={search}
+                        autoComplete="off"
+                        onChange={(e) => { setSearch(e.target.value) }}
+                        placeholder="Saliq Bisenov"
+                        required
+                     />
+                  </FormControl>
                </Col>
+            </Row>
+            <Row className='px-2 mt-4'>
+               <BasketsList 
+                  loaded={loaded}
+                  paginated={paginated}
+                  count={count}
+                  pageSize={pageSize}
+                  hendleChangePage={hendleChangePage}
+                  name="Postman"
+                  rows={row}
+               />
             </Row>
          </Paper>
       </div>

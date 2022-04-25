@@ -107,7 +107,7 @@ const DatatablePage = () => {
                   loaded={loaded}
                   paginated={paginated}
                   count={count}
-                  pageSize={pageSize} 
+                  pageSize={pageSize}
                   hendleChangePage={hendleChangePage}
                   name="Product Name"
                   rows={rows}
