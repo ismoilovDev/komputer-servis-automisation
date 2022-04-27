@@ -1,0 +1,28 @@
+.loader {
+   width: 100%;
+}
+
+.loader img {
+   width: 100%;
+}
+
+.offcanvas-backdrop {
+   z-index: 1240 !important;
+}
+
+.offcanvas {
+   z-index: 1245 !important;
+}
+
+.offcanvas-header {
+   height: 64px;
+   background: #3F51B5;
+   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 8px 0px;
+   color: #fff;
+}
+.offcanvas-header .btn-close {
+   color: #fff;
+   background-color: #fff;
+   fill: #fff;
+}
+

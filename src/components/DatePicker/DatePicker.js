@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import DateRangePicker from '@wojtekmaj/react-daterange-picker';
 
 function MyApp() {
+
   const [value, onChange] = useState([null, null]);
-  console.log(value);
   return (
     <div>
       <DateRangePicker onChange={onChange} value={value} />

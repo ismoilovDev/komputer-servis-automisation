@@ -58,7 +58,7 @@ const BasketsList = (props) => {
                            props.paginated?.length !== 0 ? (
                               props.paginated?.map((data) => (
                               <StyledTableRow
-                                 key={data?.postman.full_name}
+                                 key={data?.basket_id}
                                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                               >
                                  <StyledTableCell
@@ -73,7 +73,7 @@ const BasketsList = (props) => {
                                  <StyledTableCell align="right">{data?.description ? data?.description : <i>No Description</i>}</StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '120px' }} align="right">
                                     <span className='my_list_btns'>
-                                       <button className='btn-edit'>
+                                       <button className='btn-edit' onClick={() => props.handleShow(data)}>
                                           <FaRegEdit />
                                        </button>
                                        <button>

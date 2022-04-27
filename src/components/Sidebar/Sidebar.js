@@ -174,6 +174,7 @@ function ResponsiveDrawer(props) {
          <AppBar
             className="header"
             position="fixed"
+            style={{zIndex: 1200}}
             sx={{
                width: { sm: `calc(100% - ${drawerWidth}px)` },
                ml: { sm: `${drawerWidth}px` },
