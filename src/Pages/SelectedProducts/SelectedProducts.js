@@ -3,10 +3,12 @@ import http from '../../Services/getData';
 import { Box, Modal, Paper } from '@mui/material';
 import EditProduct from './../../components/EditProduct/EditProduct';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
-import List from '../../components/ProductsList/ProductsList'
-import '../Products/Products.css';
+import List from '../../components/ProductsList/ProductsList';
+import Title from '../../components/Title/Title';
+import { FiServer } from "react-icons/fi";
 import { paginate } from '../../utils/paginate';
 import MyAlert from '../../components/MyAlert/MyAlert';
+import '../Products/Products.css';
 
 const SelectedProducts = ({ match }) => {
    const [loaded, setLoaded] = useState(false);
@@ -100,10 +102,11 @@ const SelectedProducts = ({ match }) => {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Продукты"
+               children={<FiServer />}
+            />
             <Paper elevation={2} className="py-3 px-2">
-               <h2 className='d-flex justify-content-center mb-4'>
-                  Продукты
-               </h2>
                <List
                   loaded={loaded}
                   paginated={paginated}

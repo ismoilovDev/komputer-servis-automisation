@@ -6,9 +6,11 @@ import EditCompanyClient from '../../components/EditCompanyClient/EditCompanyCli
 import EditPostman from '../../components/EditPostman/Editpostman';
 import SingleClient from '../../components/SingleClient/SingleClient';
 import ClientsList from '../../components/ClientsList/ClientsList'
+import MyAlert from '../../components/MyAlert/MyAlert';
+import Title from '../../components/Title/Title';
+import { HiOutlineUsers } from "react-icons/hi";
 import { paginate } from '../../utils/paginate';
 import './Clients.css';
-import MyAlert from '../../components/MyAlert/MyAlert';
 
 
 const { TabPane } = Tabs;
@@ -21,7 +23,6 @@ function Clients() {
    const [selectedPostman, setSelectedPostman] = useState({});
    const [open, setOpen] = useState(false);
    const [openSingleCont, setOpenSingleCont] = useState(false);
-   const [postmanId, setPostmanId] = useState("");
    const [clickAs, setClickAs] = useState(false);
    const [singleCont, setSingleCont] = useState({});
    const [from, setFrom] = useState("");
@@ -149,10 +150,11 @@ function Clients() {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Продукты"
+               children={<HiOutlineUsers />}
+            />
             <Paper elevation={2} className="py-3 px-2">
-               <h2 className='d-flex justify-content-center'>
-                  Клиенты
-               </h2>
                <Tabs defaultActiveKey="1">
                   <TabPane tab="Yurudik" key="1">
                      <ClientsList

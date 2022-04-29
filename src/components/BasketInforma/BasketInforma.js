@@ -11,6 +11,7 @@ const BasketInforma = (props) => {
 
    useEffect(() => {
       console.log(props?.clickedPostman);
+      setLoaded(false)
       const getAllBaskets = async () => {
          await http
             .get(`/warehouse-order/?basket_id=${props?.clickedPostman.basket_id}`)
@@ -34,24 +35,33 @@ const BasketInforma = (props) => {
                <Offcanvas.Title>{props?.clickedPostman?.postman?.full_name}</Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-               <div className='loader'>
-                  <img src="./assets/loader.gif" alt='loader' />
-               </div>
                {
-                  orders.map(order => (
-                     <div key={order.product_name} className='product_box'>
-                        <div className='product_name'>
-                           {order.product_name}
-                        </div>
-                        <div className='product_count'>
-                           {order.count}
-                        </div>
-                        <div className='product_descripion'>
-                           {order.description}
-                           <a href={order.qr_link}>Kode</a>
-                        </div>
+                  !  loaded ? (
+                     <div className={!loaded ? "loader" : "loader hide"}>
+                        <img src="./assets/loader.gif" alt='loader' />
                      </div>
-                  ))
+                  ) : (
+                     <>
+                        {
+                           orders.map(order => (
+                              <div key={order.product_name} className='product_box'>
+                                 <div className='product_name'>
+                                    <span>Name:</span>
+                                    <p>
+                                       {order.product_name}
+                                    </p>
+                                 </div>
+                                 <div className='product_count'>
+                                    <span>Count:</span>
+                                    <p>
+                                       {order.count}
+                                    </p>
+                                 </div>
+                              </div>
+                           ))
+                        }
+                     </>
+                  )
                }
             </Offcanvas.Body>
          </Offcanvas>

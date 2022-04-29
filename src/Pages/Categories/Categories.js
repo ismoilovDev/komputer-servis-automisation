@@ -3,11 +3,13 @@ import { Tabs } from 'antd';
 import http from '../../Services/getData';
 import { Modal, Box, Paper } from '@mui/material';
 import EditCategory from '../../components/EditCategory/EditCategory';
-import '../Clients/Clients.css';
 import SingleCategory from '../../components/SingleCategory/SingleCategory';
 import { paginate } from '../../utils/paginate';
 import MyAlert from '../../components/MyAlert/MyAlert';
 import CategoriesList from '../../components/CategoriesList/CategoriesList';
+import { IoLayersOutline } from "react-icons/io5";
+import '../Clients/Clients.css';
+import Title from '../../components/Title/Title';
 
 
 const { TabPane } = Tabs;
@@ -162,10 +164,11 @@ function Categories() {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Категории"
+               children={<IoLayersOutline />}
+            />
             <Paper elevation={2} className="py-3 px-2">
-               <h2 className='d-flex justify-content-center'>
-                  Категории
-               </h2>
                <Tabs defaultActiveKey="1">
                   <TabPane tab="Categories" key="1">
                      <CategoriesList

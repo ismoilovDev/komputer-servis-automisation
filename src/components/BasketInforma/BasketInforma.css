@@ -2,6 +2,11 @@
    width: 100%;
 }
 
+.loader.hide {
+   opacity: 0;
+   visibility: hidden;
+}
+
 .loader img {
    width: 100%;
 }
@@ -26,3 +31,29 @@
    fill: #fff;
 }
 
+.product_box {
+   width: 100%;
+   margin: 10px 0;
+   box-shadow: rgba(0, 0, 0, 0.268) 1px 1px 7px -1px;
+   border-radius: 5px;
+   padding: 10px;
+}
+
+.product_box span {
+   display: block;
+   font-family: monospace;
+   font-size: 10px;
+   font-weight: 700;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   color: #6277ec;
+}
+.product_box p {
+   position: relative;
+   transform: translateY(-2px);
+   left: 7px;
+   font-family: 'Roboto', sans-serif !important;
+}
+.product_name {
+   margin: 10px 0;
+}

@@ -20,9 +20,6 @@ function AddCategory(
    return (
       <>
          <div className='px-4'>
-            <h2 className='d-flex justify-content-center'>
-               Добавить категорий
-            </h2>
             <Form onSubmit={(e) => addCategory(e)} autoComplete="off">
                <Row>
                   <Col xs="12" md="6" className='my-1'>

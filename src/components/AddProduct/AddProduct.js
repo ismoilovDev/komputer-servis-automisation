@@ -114,9 +114,6 @@ function AddProduct({
    }
    return (
       <div className='px-4'>
-         <h2 className='d-flex justify-content-center'>
-            Добавлять продукты
-         </h2>
          <Form onSubmit={addCategoryHendle} autoComplete="off">
             <Row>
                <Col ref={wrapperRef} xs="12" md="6" className='wrapper-slect my-1 mb-3'>

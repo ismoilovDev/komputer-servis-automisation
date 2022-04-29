@@ -47,9 +47,6 @@ function AddCategory(
    // }
    return (
       <div className='px-4'>
-         <h2 className='d-flex justify-content-center'>
-            Добавить Суб Суб Kатегорий
-         </h2>
          <Form onSubmit={addCategory} autoComplete="off">
             <Row>
                <Col ref={wrapperRef} xs="12" md="6" className='wrapper-slect my-2 mb-3'>

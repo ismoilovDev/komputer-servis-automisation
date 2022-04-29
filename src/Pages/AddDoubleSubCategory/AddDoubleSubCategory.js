@@ -4,6 +4,8 @@ import { CircularProgress } from '@mui/material';
 import AddDoubleSubCategory from '../../components/AddDoubleSubCategory/AddDoubleSubCategory';
 import http from '../../Services/getData'
 import MyAlert from '../../components/MyAlert/MyAlert';
+import Title from '../../components/Title/Title';
+import { IoLayersOutline } from "react-icons/io5";
 
 
 function AddCategories() {
@@ -127,6 +129,10 @@ function AddCategories() {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Добавить Двойные Подкатегории"
+               children={<IoLayersOutline />}
+            />
             <Paper elevation={2} className="py-3">
                <AddDoubleSubCategory
                   category={category}

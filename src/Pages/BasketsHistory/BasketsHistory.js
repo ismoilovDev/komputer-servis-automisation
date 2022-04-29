@@ -4,8 +4,10 @@ import { Col, Row } from 'react-bootstrap';
 import BasketInforma from '../../components/BasketInforma/BasketInforma';
 import BasketsList from '../../components/BasketsList/BasketsList';
 import BasicDateRangePicker from '../../components/DatePicker/DatePicker';
+import Title from '../../components/Title/Title';
 import http from '../../Services/getData';
 import { paginate } from '../../utils/paginate';
+import { VscHistory } from 'react-icons/vsc';
 
 const BasketsHistory = () => {
 
@@ -52,8 +54,11 @@ const BasketsHistory = () => {
    const paginated = paginate(baskets, currentPage, pageSize)
    return (
       <>
-      
          <div className='main px-2 px-md-3'>
+            <Title
+               title="История Заявки"
+               children={<VscHistory />}
+            />
             <Paper elevation={2} className="py-3 px-2">
                <Row className='justify-content-between align-items-center px-2'>
                   <Col xs="5">

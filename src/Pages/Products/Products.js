@@ -5,8 +5,10 @@ import EditProduct from './../../components/EditProduct/EditProduct';
 import SingleProduct from '../../components/SingleProduct/SingleProduct';
 import { paginate } from '../../utils/paginate';
 import List from '../../components/ProductsList/ProductsList';
-import './Products.css';
 import MyAlert from '../../components/MyAlert/MyAlert';
+import Title from '../../components/Title/Title';
+import { FiServer } from "react-icons/fi";
+import './Products.css';
 
 const DatatablePage = () => {
    const [loaded, setLoaded] = useState(false);
@@ -99,10 +101,11 @@ const DatatablePage = () => {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Продукты"
+               children={<FiServer />}
+            />
             <Paper elevation={2} className="py-3 px-2">
-               <h2 className='d-flex justify-content-center mb-4'>
-                  Продукты
-               </h2>
                <List
                   loaded={loaded}
                   paginated={paginated}

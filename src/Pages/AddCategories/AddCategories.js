@@ -4,6 +4,8 @@ import { CircularProgress } from '@mui/material';
 import AddCategory from '../../components/AddCategory/AddCategory';
 import http from '../../Services/getData';
 import MyAlert from '../../components/MyAlert/MyAlert';
+import { IoLayersOutline } from "react-icons/io5";
+import Title from '../../components/Title/Title';
 
 
 
@@ -71,6 +73,10 @@ function AddCategories() {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Добавление Категорий"
+               children={<IoLayersOutline />}
+            />
             <Paper elevation={2} className="py-3">
                <AddCategory
                   name={name}

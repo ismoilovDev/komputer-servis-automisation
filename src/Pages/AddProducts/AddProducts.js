@@ -2,7 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Backdrop, CircularProgress, Paper } from '@mui/material';
 import MyAlert from '../../components/MyAlert/MyAlert';
 import AddProduct from '../../components/AddProduct/AddProduct';
+import { RiPlayListAddLine } from "react-icons/ri";
 import http from '../../Services/getData';
+import Title from '../../components/Title/Title';
 
 function AddProducts() {
    const [name, setName] = useState('');
@@ -206,6 +208,10 @@ function AddProducts() {
    return (
       <>
          <div className='main px-2 px-md-3 mt-3'>
+            <Title
+               title="Добавить Продукты"
+               children={<RiPlayListAddLine />}
+            />
             <Paper elevation={2} className="py-3">
                <AddProduct
                   options={options}

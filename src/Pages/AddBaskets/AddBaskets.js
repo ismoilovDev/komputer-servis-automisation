@@ -6,6 +6,8 @@ import ProductsList from './../../components/Products/ProductsList';
 import http from './../../Services/getData';
 import './AddBaskets.css';
 import MyAlert from '../../components/MyAlert/MyAlert';
+import Title from '../../components/Title/Title';
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 function Test({ setToken }) {
    const [products, setProducts] = useState([]);
@@ -47,7 +49,8 @@ function Test({ setToken }) {
    useEffect(() => {
       getAllPostman()
       getAllProducts()
-   }, [])
+   }, // eslint-disable-next-line
+      [])
 
    // Get All Products for ID --------------->
    const getAllProducts = async () => {
@@ -170,10 +173,11 @@ function Test({ setToken }) {
    return (
       <>
          <div className='main px-2 px-md-3'>
+            <Title
+               title="Создание Заявку"
+               children={<HiOutlineDocumentAdd />}
+            />
             <Paper elevation={2} className="py-3 px-2 for-bottom">
-               <h2 className='d-flex justify-content-center mb-4'>
-                  Создание заявки
-               </h2>
                <p>USD: {usdAllSum}</p>
                <p>UZS: {uzsAllSum}</p>
                <Container>

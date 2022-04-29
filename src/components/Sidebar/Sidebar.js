@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
-import { BsBasket2Fill } from "react-icons/bs";
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
 import { MdArrowDropDown, MdArrowDropUp, MdKeyboardArrowRight } from "react-icons/md";
 import { AiOutlineAppstoreAdd } from "react-icons/ai";
+import { HiOutlineDocumentAdd, HiOutlineUsers } from "react-icons/hi";
 import { RiPlayListAddLine } from "react-icons/ri";
-import { BiCategory } from "react-icons/bi";
+import { IoLayersOutline } from "react-icons/io5";
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
@@ -22,7 +22,7 @@ import { FiServer } from "react-icons/fi";
 import Drawers from '../Drawer/Drawer'
 import { Link } from 'react-router-dom';
 import { Collapse, ListItemButton, Tooltip, Alert } from '@mui/material';
-import { FaUsers, FaUserCircle } from 'react-icons/fa';
+import { FaUserCircle } from 'react-icons/fa';
 import { HiOutlineUserAdd } from 'react-icons/hi';
 import { VscHistory } from "react-icons/vsc";
 import { makeStyles } from '@mui/styles';
@@ -36,8 +36,9 @@ const useStyles = makeStyles({
       display: 'none'
    },
    linkSvg: {
-      fontSize: "1.3rem",
-      fontWeight: 600
+      fontSize: "1.2rem",
+      fontWeight: 400,
+      marginLeft: '15px'
    }
 })
 
@@ -75,92 +76,104 @@ function ResponsiveDrawer(props) {
       setState(!state);
    };
    const drawer = (
-      <div className='drawer'>
+      <div className='drawer sidebar'>
          <Toolbar className='toolbar'>
             <Link className='logo' to="/">
                Logo
             </Link>
          </Toolbar>
-         <Box sx={{ overflow: 'auto' }}>
+         <Box sx={{ overflowX: 'hidden' }}>
             <List>
-               <ListItemButton onClick={handleClick}>
-                  <ListItemIcon className="my_link">
-                     <AiOutlineAppstoreAdd className={classes.linkSvg} />
-                  </ListItemIcon>
-                  <ListItemText primary="Добавить Категории" />
-                  {open ? <MdArrowDropUp /> : <MdArrowDropDown />}
-               </ListItemButton>
-               <Collapse in={open} timeout="auto" className='drop_collapse' unmountOnExit>
-                  <Link to="/add-categories" className='collapse_link'>
+               <div className='category-link-box'>
+                  <span className='category-link'>Категории</span>
+                  <ListItemButton onClick={handleClick}>
+                     <ListItemIcon className="my_link">
+                        <AiOutlineAppstoreAdd className={classes.linkSvg} />
+                     </ListItemIcon>
+                     <ListItemText className='for-font' primary="Добавить" />
+                     {open ? <MdArrowDropUp /> : <MdArrowDropDown />}
+                  </ListItemButton>
+                  <Collapse in={open} timeout="auto" className='drop_collapse' unmountOnExit>
+                     <Link to="/add-categories" className='collapse_link'>
+                        <ListItem button>
+                           <ListItemText primary='Категорий' />
+                        </ListItem>
+                     </Link>
+                     <Link to="/add-sub-categories" className='collapse_link'>
+                        <ListItem button>
+                           <ListItemText primary='Суб Категорий' />
+                        </ListItem>
+                     </Link>
+                     <Link to="/add-double-sub-categories" className='mb-1 collapse_link' >
+                        <ListItem button>
+                           <ListItemText primary='Суб Суб Категорий' />
+                        </ListItem>
+                     </Link>
+                  </Collapse>
+                  <Link to="/categories">
                      <ListItem button>
-                        <ListItemText primary='Категорий' />
+                        <ListItemIcon className="my_link">
+                           <IoLayersOutline className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='Категории' />
                      </ListItem>
                   </Link>
-                  <Link to="/add-sub-categories" className='collapse_link'>
+               </div>
+               <div className='category-link-box'>
+                  <span className='category-link'>Продукты</span>
+                  <Link to="/add-products">
                      <ListItem button>
-                        <ListItemText primary='Суб Категорий' />
+                        <ListItemIcon className="my_link">
+                           <RiPlayListAddLine className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='Добавить' />
                      </ListItem>
                   </Link>
-                  <Link to="/add-double-sub-categories" className='mb-1 collapse_link' >
+                  <Link to="/products">
                      <ListItem button>
-                        <ListItemText primary='Суб Суб Категорий' />
+                        <ListItemIcon className="my_link">
+                           <FiServer className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='Продукты' />
                      </ListItem>
                   </Link>
-               </Collapse>
-               <Link to="/add-products">
-                  <ListItem button>
+               </div>
+               <div className='category-link-box'>
+                  <span className='category-link'>Заявки</span>
+                  <Link to="/">
+                     <ListItem button>
+                        <ListItemIcon className="my_link">
+                           <HiOutlineDocumentAdd className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='Создание Заявки' />
+                     </ListItem>
+                  </Link>
+                  <Link to="/all-baskets">
+                     <ListItem button>
+                        <ListItemIcon className="my_link">
+                           <VscHistory className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='История Заявки' />
+                     </ListItem>
+                  </Link>
+               </div>
+               <div className='category-link-box'>
+                  <span className='category-link'>Клиенты</span>
+                  <ListItem onClick={toggleDrawer} button>
                      <ListItemIcon className="my_link">
-                        <RiPlayListAddLine className={classes.linkSvg} />
+                        <HiOutlineUserAdd className={classes.linkSvg} />
                      </ListItemIcon>
-                     <ListItemText primary='Добавить Продукты' />
+                     <ListItemText className='for-font' primary='Добавить' style={{ "cursor": "pointer" }} />
                   </ListItem>
-               </Link>
-               <ListItem onClick={toggleDrawer} button>
-                  <ListItemIcon className="my_link">
-                     <HiOutlineUserAdd className={classes.linkSvg} />
-                  </ListItemIcon>
-                  <ListItemText primary='Добавить Клиенты' style={{ "cursor": "pointer" }} />
-               </ListItem>
-               <Link to="/">
-                  <ListItem button>
-                     <ListItemIcon className="my_link">
-                        <BsBasket2Fill className={classes.linkSvg} />
-                     </ListItemIcon>
-                     <ListItemText primary='Создание Заявки' />
-                  </ListItem>
-               </Link>
-               <Link to="/categories">
-                  <ListItem button>
-                     <ListItemIcon className="my_link">
-                        <BiCategory className={classes.linkSvg} />
-                     </ListItemIcon>
-                     <ListItemText primary='Категории' />
-                  </ListItem>
-               </Link>
-               <Link to="/products">
-                  <ListItem button>
-                     <ListItemIcon className="my_link">
-                        <FiServer className={classes.linkSvg} />
-                     </ListItemIcon>
-                     <ListItemText primary='Продукты' />
-                  </ListItem>
-               </Link>
-               <Link to="/clients">
-                  <ListItem button>
-                     <ListItemIcon className="my_link">
-                        <FaUsers className={classes.linkSvg} />
-                     </ListItemIcon>
-                     <ListItemText primary='Клиенты' />
-                  </ListItem>
-               </Link>
-               <Link to="/all-baskets">
-                  <ListItem button>
-                     <ListItemIcon className="my_link">
-                        <VscHistory className={classes.linkSvg} />
-                     </ListItemIcon>
-                     <ListItemText primary='Zayavki history' />
-                  </ListItem>
-               </Link>
+                  <Link to="/clients">
+                     <ListItem button>
+                        <ListItemIcon className="my_link">
+                           <HiOutlineUsers className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='Клиенты' />
+                     </ListItem>
+                  </Link>
+               </div>
             </List>
          </Box>
       </div>

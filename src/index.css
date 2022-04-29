@@ -1,19 +1,22 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
 body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Source Sans Pro', sans-serif !important;
-  font-size: 16px !important;
+  font-size: 16px;
   background-color: #F4F5FD !important;
 }
+
+table, tr, th, td {
+  font-family: 'Source Sans Pro', sans-serif !important;
+}
+
 .main {
   position: relative;
   left: 0;
   width: 100%;
   min-height: 90vh;
   z-index: 1;
-  top: 80px;
+  top: 40px;
   padding: 1rem 0;
 }
 .main h2 {
@@ -44,6 +47,6 @@ span.sr-only, div.dataTables_info {
     left: 240px;
     width: calc(100% - 240px);
     z-index: 1;
-    top: 100px;
+    top: 50px;
   }
 }
