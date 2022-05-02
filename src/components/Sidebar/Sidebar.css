@@ -122,6 +122,7 @@ a.logo {
    box-shadow: 0 2px 5px rgba(98, 98, 98, 0.2);
    opacity: 0;
    z-index: 1;
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
 .my_drop ul.my_drop_ul, .sub_child ul.sub_child_ul, .sub_sub_child ul.sub_sub_child_ul {

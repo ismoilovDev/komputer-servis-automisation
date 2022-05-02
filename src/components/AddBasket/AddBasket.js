@@ -8,7 +8,7 @@ import './AddBasket.css';
 
 const useStyles = makeStyles({
    myBtn: {
-      background: '#f8324530',
+      background: '#f83266',
       border: 0,
       borderRadius: 3,
       color: 'red',
@@ -17,7 +17,8 @@ const useStyles = makeStyles({
       transition: '.3s',
       margin: 0,
       '&:hover': {
-         backgroundColor: '#f8324520',
+         backgroundColor: '#f83240',
+         transform: 'scale(1)'
       }
    },
    font: {
@@ -86,7 +87,7 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
                </button>
             </Col>
          </Row>
-         <hr />
+         <div className='hr'></div>
          <Form className='py-3 px-4' autoComplete='off' onSubmit={addOrder}>
             <Row>
                <Col ref={wrapperRef} xs="12" className='wrapper-slect my-2 mb-3'>

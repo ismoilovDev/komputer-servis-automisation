@@ -19,7 +19,7 @@ function AddCategory(
 
    return (
       <>
-         <div className='px-4'>
+      <div className='px-3 px-md-4'>
             <Form onSubmit={(e) => addCategory(e)} autoComplete="off">
                <Row>
                   <Col xs="12" md="6" className='my-1'>

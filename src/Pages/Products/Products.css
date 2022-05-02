@@ -102,10 +102,6 @@
    padding: 10px 0;
    /* animation: tableElemAnimation .2s linear; */
 }
-.my_table ul li.my_table_body:nth-child(odd) {
-   background-color: #c1cedb;
-}
-
 .my_table_body span {
    display: block;
    flex-basis: 100%;

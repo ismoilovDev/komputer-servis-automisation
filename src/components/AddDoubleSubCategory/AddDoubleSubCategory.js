@@ -23,7 +23,6 @@ function AddCategory(
       options,
       wrapperRef,
       setCategoryId,
-      getSubCategories
    }) {
 
    // ONE
@@ -31,7 +30,6 @@ function AddCategory(
       setCategory(cate);
       setDisplay(false);
       setCategoryId(id);
-      getSubCategories(id)
    }
 
    const changeProductName = (name) => {
@@ -46,7 +44,7 @@ function AddCategory(
    //    setSubCategoryId(id)
    // }
    return (
-      <div className='px-4'>
+      <div className='px-3 px-md-4'>
          <Form onSubmit={addCategory} autoComplete="off">
             <Row>
                <Col ref={wrapperRef} xs="12" md="6" className='wrapper-slect my-2 mb-3'>

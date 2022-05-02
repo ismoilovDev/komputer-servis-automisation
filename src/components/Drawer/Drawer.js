@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import { Tabs } from 'antd';
@@ -9,6 +9,7 @@ import { CircularProgress } from '@mui/material';
 import { Snackbar } from '@mui/material';
 import { Alert } from '@mui/material';
 import http from '../../Services/getData';
+import NumberFormat from 'react-number-format';
 import './Drawer.css';
 
 
@@ -27,7 +28,9 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
    const [open, setOpen] = useState(false);
    const [notific, setNotific] = useState(false);
    const [notificRes, setNotificRes] = useState(false);
-
+   const innInput = useRef(null)
+   const [isError, setIsError] = useState(false);
+   const { TabPane } = Tabs;
    // Error
    const handleClick = () => {
       setNotific(true);
@@ -52,41 +55,44 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
       setOpen(true);
    };
 
-   const { TabPane } = Tabs;
-
    // Yurudik
    const postHendleYurudik = (e) => {
       e.preventDefault();
-      handleOpen();
-      setNotific(false);
-      setNotificRes(false);
-      const data = {
-         status: "Y",
-         phone: phone,
-         full_name: name,
-         inn: inn,
-         description: discription
+      setIsError(false);
+      if (inn.length === 14) {
+         handleOpen();
+         setNotific(false);
+         setNotificRes(false);
+         const data = {
+            status: "Y",
+            phone: phone,
+            full_name: name,
+            inn: inn,
+            description: discription
+         }
+         http
+            .post('/user/create', data)
+            .then(res => {
+               console.log(res.data.data);
+               setName('');
+               setDiscription('');
+               setInn('');
+               setPhone('');
+               handleClose();
+               handleClickRes();
+            })
+            .catch(err => {
+               setName('');
+               setDiscription('');
+               setInn('');
+               setPhone('');
+               handleClose();
+               handleClick();
+               console.log(err)
+            })
+      } else {
+         setIsError(true)
       }
-      http
-         .post('/user/create', data)
-         .then(res => {
-            console.log(res.data.data);
-            setName('');
-            setDiscription('');
-            setInn('');
-            setPhone('');
-            handleClose();
-            handleClickRes();
-         })
-         .catch(err => {
-            setName('');
-            setDiscription('');
-            setInn('');
-            setPhone('');
-            handleClose();
-            handleClick();
-            console.log(err)
-         })
    }
 
    // Jismoniy
@@ -124,36 +130,54 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
    // Postman
    const postHendlePostman = (e) => {
       e.preventDefault();
-      handleOpen();
-      setNotific(false);
-      setNotificRes(false);
-      const data = {
-         phone: phone,
-         full_name: name,
-         inn: inn,
-         description: discription
+      setIsError(false);
+      if (inn.length === 14) {
+         handleOpen();
+         setNotific(false);
+         setNotificRes(false);
+         const data = {
+            phone: phone,
+            full_name: name,
+            inn: inn,
+            description: discription
+         }
+         http
+            .post('/postman/create', data)
+            .then(res => {
+               console.log(res.data.data);
+               setName('');
+               setDiscription('');
+               setInn('');
+               setPhone('');
+               handleClose();
+               handleClickRes();
+            })
+            .catch(err => {
+               setName('');
+               setDiscription('');
+               setInn('');
+               setPhone('');
+               handleClose();
+               handleClick();
+               console.log(err)
+            })
+      } else {
+         setIsError(true)
       }
-      http
-         .post('/postman/create', data)
-         .then(res => {
-            console.log(res.data.data);
-            setName('');
-            setDiscription('');
-            setInn('');
-            setPhone('');
-            handleClose();
-            handleClickRes();
-         })
-         .catch(err => {
-            setName('');
-            setDiscription('');
-            setInn('');
-            setPhone('');
-            handleClose();
-            handleClick();
-            console.log(err)
-         })
    }
+
+   // Cheack Length 
+   const innChanged = (innVal) => {
+      if(innVal.length > 14) {
+         setInn(innVal);
+         setIsError(true);
+      }
+      else {
+         setInn(innVal);
+         setIsError(false);
+      }
+   }
+
    return (
       <div>
          <React.Fragment>
@@ -167,11 +191,10 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                   className='px-2'
                >
                   <Tabs defaultActiveKey="1">
-
                      {/* Yurudik */}
                      <TabPane tab="Юрид" key="1">
                         <div className='px-2'>
-                           <Form onSubmit={postHendleYurudik}>
+                           <Form onSubmit={postHendleYurudik} autoComplete="off" >
                               <FormControl className='w-100 my-2'>
                                  <TextField
                                     size="small"
@@ -188,30 +211,35 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                               </FormControl>
                               <FormControl className='w-100'>
                                  <TextField
+                                    ref={innInput}
                                     size="small"
                                     className="w-100 for-label mb-3"
                                     type="number"
                                     id="inn"
-                                    variant="standard"
                                     label="ИНН предприятия(STIR)"
+                                    variant="standard"
                                     value={inn}
-                                    onChange={(e) => { setInn(e.target.value) }}
-                                    placeholder="18975656965"
+                                    onChange={e => innChanged(e.target.value)}
+                                    placeholder="18975656965845"
                                     required
+                                    error={isError}
+                                    helperText={isError ? "Должно быть 14 цифр" : ""}
                                  />
                               </FormControl>
                               <FormControl className='w-100 my-2'>
-                                 <TextField
-                                    size="small"
-                                    className="w-100 for-label mb-3"
-                                    type="tel"
-                                    id="firma_phone"
-                                    variant="standard"
-                                    label="Телефон предприятия"
-                                    value={phone}
-                                    onChange={(e) => { setPhone(e.target.value) }}
-                                    placeholder="+998937077007"
+                                 <NumberFormat
+                                    customInput={TextField}
+                                    variant='standard'
+                                    format="+998(##)###-##-##"
+                                    id="tele_num"
+                                    label="Номер телефона"
+                                    mask={"_"}
+                                    onValueChange={e => {
+                                       setPhone(e.formattedValue)
+                                    }}
+                                    placeholder="+998(90)662-16-02"
                                     required
+                                    value={phone}
                                  />
                               </FormControl>
                               <FloatingLabel className='my-2' controlId="floatingTextarea2" label="Дополнительная Информация">
@@ -233,7 +261,7 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                      {/* Jismoniy */}
                      <TabPane tab="Физические" key="2">
                         <div className='px-2'>
-                           <Form onSubmit={postHendleJismoniy}>
+                           <Form onSubmit={postHendleJismoniy} autoComplete='off'>
                               <FormControl className='w-100 my-2'>
                                  <TextField
                                     size="small"
@@ -249,17 +277,19 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                                  />
                               </FormControl>
                               <FormControl className='w-100 my-2'>
-                                 <TextField
-                                    size="small"
-                                    className="w-100 for-label mb-3"
-                                    type="tel"
+                                 <NumberFormat
+                                    customInput={TextField}
+                                    variant='standard'
+                                    format="+998(##)###-##-##"
                                     id="jis_phone"
-                                    variant="standard"
-                                    label="Телефон"
-                                    value={jisPhone}
-                                    onChange={(e) => { setJisPhone(e.target.value) }}
-                                    placeholder="+998937077007"
+                                    label="Номер телефона"
+                                    mask={"_"}
+                                    onValueChange={e => {
+                                       setJisPhone(e.formattedValue)
+                                    }}
+                                    placeholder="+998(90)662-16-02"
                                     required
+                                    value={jisPhone}
                                  />
                               </FormControl>
                               <FloatingLabel className='my-2' controlId="floatingTextarea2" label="Дополнительная Информация">
@@ -279,9 +309,9 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                      </TabPane>
 
                      {/* Postman */}
-                     <TabPane tab="Почтальон" key="3">
+                     <TabPane tab="Поставщик" key="3">
                         <div className='px-2'>
-                           <Form onSubmit={postHendlePostman}>
+                           <Form onSubmit={postHendlePostman} autoComplete='off'>
                               <FormControl className='w-100 my-2'>
                                  <TextField
                                     size="small"
@@ -289,7 +319,7 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                                     type="text"
                                     id="firma_name"
                                     variant="standard"
-                                    label="Наименование почтальон"
+                                    label="Наименование поставщик"
                                     value={name}
                                     onChange={(e) => { setName(e.target.value) }}
                                     placeholder="Chopar MCHJ"
@@ -303,26 +333,31 @@ export default function TemporaryDrawer({ state, setState, toggleDrawer }) {
                                     type="number"
                                     id="inn"
                                     variant="standard"
-                                    label="ИНН почтальон(STIR)"
+                                    label="ИНН оставщик(STIR)"
                                     value={inn}
-                                    onChange={(e) => { setInn(e.target.value) }}
-                                    placeholder="18975656965"
+                                    onChange={(e) => { innChanged(e.target.value) }}
+                                    placeholder="18975656965284"
                                     required
+                                    error={isError}
+                                    helperText={isError ? "Должно быть 14 цифр" : ""}
                                  />
                               </FormControl>
                               <FormControl className='w-100 my-2'>
-                                 <TextField
-                                    size="small"
-                                    className="w-100 for-label mb-3"
-                                    type="tel"
-                                    id="firma_phone"
-                                    variant="standard"
-                                    label="Телефон почтальон"
-                                    value={phone}
-                                    onChange={(e) => { setPhone(e.target.value) }}
-                                    placeholder="+998937077007"
+                                 <NumberFormat
+                                    customInput={TextField}
+                                    variant='standard'
+                                    format="+998(##)###-##-##"
+                                    id="tele_num"
+                                    label="Номер телефона"
+                                    mask={"_"}
+                                    onValueChange={e => {
+                                       setPhone(e.formattedValue)
+                                    }}
+                                    placeholder="+998(90)662-16-02"
                                     required
+                                    value={phone}
                                  />
+                                 
                               </FormControl>
                               <FloatingLabel className='my-2' controlId="floatingTextarea2" label="Дополнительная Информация">
                                  <Form.Control

@@ -2,9 +2,9 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif !important;
 }
 
-table, tr, th, td {
+table, tr, th, td, input, select, option, ul, li {
     font-family: 'Source Sans Pro', sans-serif !important;
 }

@@ -10,7 +10,7 @@ import '../ProductsList/ProductsList.css';
 
 
 const List = (props) => {
-   console.log(props.paginated);
+   
    // Table Cell ------------------->
    const StyledTableCell = styled(TableCell)(({ theme }) => ({
       [`&.${tableCellClasses.head}`]: {
@@ -46,7 +46,7 @@ const List = (props) => {
                   <Table sx={{ minWidth: 650 }} size="medium" aria-label="a dense table">
                      <TableHead>
                         <TableRow>
-                           <StyledTableCell style={{ minWidth: '400px' }}>{props.name}</StyledTableCell>
+                           <StyledTableCell style={{ minWidth: '250px' }}>{props.name}</StyledTableCell>
                            {
                               props.rows.map(row => (
                                  <StyledTableCell key={row} align="right">{row}</StyledTableCell>
@@ -70,7 +70,7 @@ const List = (props) => {
                                  >
                                     {data?.full_name.length > 60 ? data?.full_name.substring(0, 57) + '...' : data?.full_name}
                                  </StyledTableCell>
-                                 <StyledTableCell align="right">{data?.phone}</StyledTableCell>
+                                 <StyledTableCell style={{ minWidth: '170px' }} align="right">{data?.phone}</StyledTableCell>
                                  {
                                     data?.inn ? (
                                        <StyledTableCell align="right">{data?.inn}</StyledTableCell>

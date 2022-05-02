@@ -27,15 +27,15 @@
    font-weight: 600;
 }
 
-p.max_price svg {
+.single_product p.max_price svg {
    background-color: #2ec600;
 }
 
-p.min_price svg {
+.single_product p.min_price svg {
    background-color: #f90808;
 }
 
-p.whole_price svg {
+.single_product p.whole_price svg {
    background-color: rgb(227, 227, 5);
 }
 

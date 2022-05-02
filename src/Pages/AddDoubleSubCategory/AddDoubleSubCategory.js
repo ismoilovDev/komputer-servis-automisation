@@ -18,9 +18,9 @@ function AddCategories() {
    const [display1, setDisplay1] = useState(false);
    const [options, setOptions] = useState([]);
    const [name, setName] = useState('');
-   const [minPrecent, setMinPercent] = useState(null);
-   const [maxPercent, setMaxPercent] = useState(null);
-   const [wholesale, setWholesale] = useState(null);
+   const [minPrecent, setMinPercent] = useState('');
+   const [maxPercent, setMaxPercent] = useState('');
+   const [wholesale, setWholesale] = useState('');
    const [alertCount, setAlertCount] = useState('');
    const wrapperRef = useRef(null);
    const wrapperRef1 = useRef(null);
@@ -51,9 +51,9 @@ function AddCategories() {
       const data = {
          parent_id: categoryId,
          name: name,
-         min_percent: minPrecent,
-         max_percent: maxPercent,
-         whole_percent: wholesale
+         min_percent: minPrecent ? minPrecent : null,
+         max_percent: maxPercent ? maxPercent : null,
+         whole_percent: wholesale ? wholesale : null,
       }
       http
       .post("/category/create", data)

@@ -42,9 +42,9 @@ function AddCategories() {
       handleOpen()
       const data = {
          name: name,
-         min_percent: minPrecent,
-         max_percent: maxPercent,
-         whole_percent: wholesale,
+         min_percent: minPrecent ? minPrecent : null,
+         max_percent: maxPercent ? maxPercent : null,
+         whole_percent: wholesale ? wholesale : null,
          parent_id: 0
       }
       http

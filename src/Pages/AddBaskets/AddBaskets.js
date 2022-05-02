@@ -177,10 +177,22 @@ function Test({ setToken }) {
                title="Создание Заявку"
                children={<HiOutlineDocumentAdd />}
             />
-            <Paper elevation={2} className="py-3 px-2 for-bottom">
-               <p>USD: {usdAllSum}</p>
-               <p>UZS: {uzsAllSum}</p>
+            <Paper elevation={2} className="py-3 px-2 mb-4">
                <Container>
+                  <Row className='w-100 justify-content-around basket-price'>
+                     <h3>Заявку Цены</h3>
+                     <Col xs='12' md='6'>
+                        <p><strong>Доллар США: </strong> {usdAllSum}</p>
+                     </Col>
+                     <Col xs='12' md='6'>
+                        <p><strong>Узбекский Сум: </strong> {uzsAllSum}</p>
+                     </Col>
+                  </Row>
+               </Container>
+            </Paper>
+            <Paper elevation={2} className="py-3 px-2 for-bottom">
+               <Container>
+                  {/* <div className='hr'></div> */}
                   <Row>
                      <Form onSubmit={addBaketHendle} autoComplete="off">
                         <Row className='mb-4'>
@@ -209,8 +221,8 @@ function Test({ setToken }) {
                            </Col>
                         </Row>
                         <div className='to-bottom'>
-                           <Row className='w-100 justify-content-start m-0 p-0 mt-2'>
-                              <Col>
+                           <Row className='w-100 justify-content-start m-0 p-1 mt-2'>
+                              <Col xs='12' className='w-100 p-0 m-0'>
                                  <FloatingLabel className='my-2' controlId="floatingTextarea2" label="Дополнительная информация">
                                     <Form.Control
                                        as="textarea"
@@ -222,19 +234,19 @@ function Test({ setToken }) {
                                  </FloatingLabel>
                               </Col>
                            </Row>
-                           <Row className='w-100 justify-content-end mt-2'>
+                           <Row className='w-100 justify-content-end m-0 mt-2'>
                               <Col className='d-flex justify-content-end m-0 p-0'>
                                  <Button
                                     type="button"
                                     variant="outlined"
                                     color="primary"
-                                    className='px-5'
+                                    className='px-4 px-md-5 mx-3'
                                     onClick={clearData}
                                  >
                                     Clear
                                  </Button>
                                  <Button
-                                    className='px-5 mx-3'
+                                    className='px-4 px-md-5'
                                     type="submit"
                                     variant="contained"
                                     color="primary"

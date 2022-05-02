@@ -113,7 +113,7 @@ function AddProduct({
       setSubSubCategory(name)
    }
    return (
-      <div className='px-4'>
+      <div className='px-3 px-md-4'>
          <Form onSubmit={addCategoryHendle} autoComplete="off">
             <Row>
                <Col ref={wrapperRef} xs="12" md="6" className='wrapper-slect my-1 mb-3'>

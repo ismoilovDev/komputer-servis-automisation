@@ -65,7 +65,7 @@ function Categories() {
       setNotific(false)
    };
 
-   const rows = ['Min prosent', 'Whole prosent', 'Max prosent', 'Операции'];
+   const rows = ['Мин процент', 'Оптом процент', 'Мак процент', 'Операции'];
 
    // Get Main Categories
    const getMainCategories = async () => {
@@ -161,6 +161,7 @@ function Categories() {
    const CategoryPaginated = paginate(categories, currentPage, pageSize);
    const SubCategoryPaginated = paginate(subCategories, currentPage, pageSize);
    const DoubleSubCategoryPaginated = paginate(doubleSubCategories, currentPage, pageSize);
+
    return (
       <>
          <div className='main px-2 px-md-3'>
@@ -170,42 +171,42 @@ function Categories() {
             />
             <Paper elevation={2} className="py-3 px-2">
                <Tabs defaultActiveKey="1">
-                  <TabPane tab="Categories" key="1">
+                  <TabPane tab="Категории" key="1">
                      <CategoriesList
                         loaded={loaded}
                         paginated={CategoryPaginated}
                         count={count}
                         pageSize={pageSize} 
                         hendleChangePage={hendleChangePage}
-                        name="Category Name"
+                        name="Название Kатегории"
                         rows={rows}
                         clickedSingleObjHendle={clickedSingleObjHendle}
                         clickedObjHendle={clickedObjHendle}
                         deleteData={deleteCategoryHendle}
                      />
                   </TabPane>
-                  <TabPane tab="Sub Categories" key="2">
+                  <TabPane tab="Подкатегории" key="2">
                      <CategoriesList
                         loaded={loaded}
                         paginated={SubCategoryPaginated}
                         count={count}
                         pageSize={pageSize} 
                         hendleChangePage={hendleChangePage}
-                        name="Sub Category Name"
+                        name="Название Kатегории"
                         rows={rows}
                         clickedSingleObjHendle={clickedSingleObjHendle}
                         clickedObjHendle={clickedObjHendle}
                         deleteData={deleteCategoryHendle}
                      />
                   </TabPane>
-                  <TabPane tab="Sub Sub Categories" key="3">
+                  <TabPane tab="Двойные Подкатегории" key="3">
                      <CategoriesList
                         loaded={loaded}
                         paginated={DoubleSubCategoryPaginated}
                         count={count}
                         pageSize={pageSize} 
                         hendleChangePage={hendleChangePage}
-                        name="Sub Sub Category Name"
+                        name="Название Kатегории"
                         rows={rows}
                         clickedSingleObjHendle={clickedSingleObjHendle}
                         clickedObjHendle={clickedObjHendle}
