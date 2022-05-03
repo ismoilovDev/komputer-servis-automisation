@@ -17,6 +17,7 @@ import Login from './Pages/Login/Login';
 import Clients from './Pages/Clients/Clients';
 import SelectedProducts from './Pages/SelectedProducts/SelectedProducts';
 import BasketsHistory from './Pages/BasketsHistory/BasketsHistory';
+import Main from './Pages/Main/Main';
 
 
 function Routing() {
@@ -30,6 +31,9 @@ function Routing() {
         <Sidebar />
         <Switch>
           <Route exact path="/">
+            <Main setToken={setToken} />
+          </Route>
+          <Route path="/add-baskets">
             <AddBaskets setToken={setToken} />
           </Route>
           <Route path="/add-categories">

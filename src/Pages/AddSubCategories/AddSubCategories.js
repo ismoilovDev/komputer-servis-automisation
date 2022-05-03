@@ -47,12 +47,20 @@ function AddCategories() {
    const addCategoryHendle = (e) => {
       e.preventDefault()
       handleOpen()
-      const data = {
-         parent_id: categoryId,
-         name: name,
-         min_percent: minPrecent ? minPrecent : null,
-         max_percent: maxPercent ? maxPercent : null,
-         whole_percent: wholesale ? wholesale : null,
+      let data = {}
+      if (minPrecent !== '' && maxPercent !== '' && wholesale !== '') {
+         data = {
+            name,
+            parent_id: categoryId,
+            min_percent : minPrecent,
+            max_percent: maxPercent,
+            whole_percent: wholesale
+         }
+      } else {
+         data = {
+            name,
+            parent_id: categoryId,
+         }
       }
       http
          .post("/category/create", data)
