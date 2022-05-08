@@ -140,7 +140,7 @@ function ResponsiveDrawer(props) {
                </div>
                <div className='category-link-box'>
                   <span className='category-link'>Заявки</span>
-                  <Link to="/">
+                  <Link to="/add-baskets">
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <HiOutlineDocumentAdd className={classes.linkSvg} />

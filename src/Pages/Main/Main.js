@@ -37,7 +37,7 @@ const MainContent = ({ setToken }) => {
                children={<IoLayersOutline />}
             />
             <ProgressBar />
-            <Row className=''>
+            <Row>
                <LineAnalys />
             </Row>
          </Container>

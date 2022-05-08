@@ -164,7 +164,6 @@ function EditProduct ({
                            value={brand}
                            onChange={(e) => { setBrand(e.target.value) }}
                            placeholder="Intel"
-                           required
                         />
                      </FormControl>
                   </Col>
@@ -209,6 +208,7 @@ function EditProduct ({
                            variant="standard"
                            label="Min Sum"
                            value={minSum}
+                           onChange={(e) => setMinSum(e.target.value)}
                            placeholder="20"
                         />
                      </FormControl>
@@ -223,6 +223,7 @@ function EditProduct ({
                            variant="standard"
                            label="Optom Sum"
                            value={wholeSum}
+                           onChange={(e) => setMaxSum(e.target.value)}
                            placeholder="17"
                         />
                      </FormControl>
@@ -237,6 +238,7 @@ function EditProduct ({
                            variant="standard"
                            label="Max Sum"
                            value={maxSum}
+                           onChange={(e) => setMaxSum(e.target.value)}
                            placeholder="25"
                         />
                      </FormControl>
