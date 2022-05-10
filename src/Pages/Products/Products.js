@@ -8,6 +8,7 @@ import List from '../../components/ProductsList/ProductsList';
 import MyAlert from '../../components/MyAlert/MyAlert';
 import Title from '../../components/Title/Title';
 import { FiServer } from "react-icons/fi";
+import swal from 'sweetalert';
 import './Products.css';
 
 const DatatablePage = () => {
@@ -41,7 +42,7 @@ const DatatablePage = () => {
       getAllProduct()
    }, [])
 
-   
+
    // For Alert
    const handleClick = () => {
       setNotific(true);
@@ -72,22 +73,30 @@ const DatatablePage = () => {
 
    // Delete Product
    const deleteProduct = (id, name) => {
-      if(window.confirm(`Delete ${name}`)) {
-         http
-            .delete(`/product/delete/${id}`)
-            .then(res => {
-               setProducts(products.filter(item => item.id !== id));
-               setFrom('delete');
-               setDeleted(true);
-               handleClick();
-
-            })
-            .catch(err => {
-               setFrom('delete');
-               setDeleted(false);
-               handleClick();
-            })
-      }
+      swal({
+         title: "Are you sure?",
+         text: "Once deleted, you will not be able to recover this imaginary file!",
+         icon: "warning",
+         buttons: true,
+         dangerMode: true,
+      })
+         .then((willDelete) => {
+            if(willDelete) {
+               swal(`${name} удален`, {
+                  icon: "success",
+               });
+               http
+                  .delete(`/product/delte/${id}`)
+                  .then(res => {
+                     setProducts(products.filter(item => item.id !== id));
+                  })
+                  .catch(err => {
+                     swal(`${name} не удален`, {
+                        icon: "danger",
+                     });
+                  })
+            }
+         });
    }
 
    // Change Page
@@ -96,7 +105,7 @@ const DatatablePage = () => {
       window.scroll(0, 0);
    }
    // Paginate
-   const paginated = paginate(products, currentPage, pageSize)
+   const paginated = paginate(products, currentPage, pageSize);
 
    return (
       <>
@@ -165,5 +174,6 @@ const DatatablePage = () => {
       </>
    );
 }
+
 
 export default DatatablePage;

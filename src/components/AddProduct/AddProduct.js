@@ -278,6 +278,7 @@ function AddProduct({
                         variant="standard"
                         label="Optom sum"
                         value={wholeSum}
+                        onChange={(e) => setWholeSum(e.target.value)}
                         placeholder="20"
                         required
                      />
@@ -292,6 +293,7 @@ function AddProduct({
                         variant="standard"
                         label="Max sum"
                         value={maxSum}
+                        onChange={(e) => setMaxSum(e.target.value)}
                         placeholder="25"
                         required
                      />
@@ -306,6 +308,7 @@ function AddProduct({
                         variant="standard"
                         label="Min sum"
                         value={minSum}
+                        onChange={(e) => setMinSum(e.target.value)}
                         placeholder="15"
                         required
                      />
