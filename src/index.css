@@ -47,6 +47,9 @@ span.sr-only, div.dataTables_info {
   margin-right: 0;
   width: 100%;
 }
+.swal2-container {
+  z-index: 11000 !important;
+}
 @media(min-width: 600px) {
   .main {
     left: 240px;

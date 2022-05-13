@@ -8,7 +8,7 @@ import List from '../../components/ProductsList/ProductsList';
 import MyAlert from '../../components/MyAlert/MyAlert';
 import Title from '../../components/Title/Title';
 import { FiServer } from "react-icons/fi";
-import swal from 'sweetalert';
+import Swal from 'sweetalert2';
 import './Products.css';
 
 const DatatablePage = () => {
@@ -73,30 +73,35 @@ const DatatablePage = () => {
 
    // Delete Product
    const deleteProduct = (id, name) => {
-      swal({
-         title: "Are you sure?",
-         text: "Once deleted, you will not be able to recover this imaginary file!",
-         icon: "warning",
-         buttons: true,
-         dangerMode: true,
+      Swal.fire({
+         title: 'Are you sure?',
+         text: "You won't be able to revert this!",
+         icon: 'warning',
+         showCancelButton: true,
+         confirmButtonColor: '#3085d6',
+         cancelButtonColor: '#d33',
+         confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+         if (result.isConfirmed) {
+            http
+            .delete(`/product/delete/${id}`)
+            .then(res => {
+               setProducts(products.filter(item => item.id !== id));
+               Swal.fire(
+                  'Deleted!',
+                  'Your file has been deleted.',
+                  'success',
+               )
+            })
+            .catch(() => {
+               Swal.fire({
+                  icon: 'error',
+                  title: 'Oops...',
+                  text: 'Something went wrong!'
+               })
+            })
+         }
       })
-         .then((willDelete) => {
-            if(willDelete) {
-               swal(`${name} удален`, {
-                  icon: "success",
-               });
-               http
-                  .delete(`/product/delte/${id}`)
-                  .then(res => {
-                     setProducts(products.filter(item => item.id !== id));
-                  })
-                  .catch(err => {
-                     swal(`${name} не удален`, {
-                        icon: "danger",
-                     });
-                  })
-            }
-         });
    }
 
    // Change Page

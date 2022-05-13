@@ -1,0 +1,14 @@
+.ant-picker {
+   width: 100%;
+   box-shadow: 0 0 4px #a2a2a24b;
+   padding: 5px 7px;
+}
+.change-form .css-9ddj71-MuiInputBase-root-MuiOutlinedInput-root {
+   line-height: 1em !important;
+}
+.change-form .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+   height: 1em !important;
+}
+.change-form .css-jedpe8-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input.MuiSelect-select {
+   min-height: 1em !important;
+}

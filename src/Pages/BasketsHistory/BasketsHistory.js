@@ -1,27 +1,48 @@
-import { FormControl, Paper, TextField } from '@mui/material';
 import React, { useEffect, useState } from 'react';
+import { FormControl, Paper, Select, InputLabel, OutlinedInput, MenuItem } from '@mui/material';
+import { DatePicker } from 'antd';
 import { Col, Row } from 'react-bootstrap';
 import BasketInforma from '../../components/BasketInforma/BasketInforma';
 import BasketsList from '../../components/BasketsList/BasketsList';
-import BasicDateRangePicker from '../../components/DatePicker/DatePicker';
 import Title from '../../components/Title/Title';
 import http from '../../Services/getData';
 import { paginate } from '../../utils/paginate';
 import { VscHistory } from 'react-icons/vsc';
+import moment from 'moment';
+import { makeStyles } from '@mui/styles';
+import './BasketsHistory.css';
+
+
+const now = Date.now()
+const useStyles = makeStyles({
+   minLabel: {
+      borderRadius: 2,
+      lineHeight: '1em',
+   },
+   minInput: {
+      minHeight: '1em'
+   }
+});
 
 const BasketsHistory = () => {
-
+   const classes = useStyles();
    const [loaded, setLoaded] = useState(false);
-   const [search, setSearch] = useState("");
+   const [postmanId, setPostmanId] = useState('');
+   const [postmans, setPostmans] = useState([]);
    const [clickedPostman, setClickedPostman] = useState({});
    const [baskets, setBaskets] = useState([]);
-   
+   const [start, setStart] = useState('2000-12-31')
+   const [end, setEnd] = useState(moment(now).format('YYYY-MM-DD'))
+   const dateFormat = 'YYYY/MM/DD';
    // OffCanvas' states
    const [show, setShow] = useState(false);
    const [currentPage, setCurrentPage] = useState(1);
    const [pageSize] = useState(10);
    let count = baskets.length;
 
+   const row = ["Price UZS", "Price USD", "Description", "Operations"];
+
+   // Get All Baskets ------------>
    useEffect(() => {
       const getAllBaskets = async () => {
          await http
@@ -34,12 +55,29 @@ const BasketsHistory = () => {
             })
       }
       getAllBaskets()
+   }, [start, end])
+
+
+
+   // Get All Postmans ----------->
+   useEffect(() => {
+      const getAllPostman = async () => {
+         await http
+            .get('/postman/all')
+            .then(res => {
+               setPostmans(res.data)
+            })
+            .catch(err => {
+               console.log(err)
+            })
+      }
+      getAllPostman()
    }, [])
-   const row = [ "Price UZS", "Price USD", "description", "Operations" ];
-   
+
+
    // OffCanvas Hendles ---------------->
    const handleClose = () => setShow(false);
-   const handleShow = (obj) =>{
+   const handleShow = (obj) => {
       setShow(true);
       setClickedPostman(obj)
       console.log(obj);
@@ -60,30 +98,55 @@ const BasketsHistory = () => {
                children={<VscHistory />}
             />
             <Paper elevation={2} className="py-3 px-2">
-               <Row className='justify-content-between align-items-center px-2'>
-                  <Col xs="5">
-                     <BasicDateRangePicker />
+               <Row className='justify-content-start align-items-center'>
+                  <Col xs="12" lg="4" className='mt-4 mt-md-2'>
+                     <Row>
+                        <Col>
+                           <DatePicker
+                              value={moment(start, dateFormat)}
+                              onChange={(value, strValue) => {
+                                 setStart(strValue)
+                              }} 
+                              defaultValue={moment('2015/01/01', dateFormat)}
+                              format={dateFormat}
+                           />
+                        </Col>
+                        <Col>
+                           <DatePicker
+                              value={moment(end)}
+                              onChange={(value, strValue) => {
+                                 setEnd(strValue)
+                              }} 
+                              defaultValue={moment('2015/01/01', dateFormat)}
+                              format={dateFormat}
+                           />
+                        </Col>
+                     </Row>
                   </Col>
-                  <Col xs="7" className='d-flex align-items-center'>
-                     <FormControl className='w-100'>
-                        <TextField
-                           size="small"
-                           className="w-100 for-label"
-                           type="text"
-                           id="tavar"
-                           variant="outlined"
-                           label="Search..."
-                           value={search}
-                           autoComplete="off"
-                           onChange={(e) => { setSearch(e.target.value) }}
-                           placeholder="Saliq Bisenov"
+                  
+                  <Col xs="12" lg="4" className='d-flex align-items-center mt-4 mt-md-2'>
+                     <FormControl className='w-100 change-form' variant="outlined" size='small'>
+                        <InputLabel style={{lineHeight: '1em'}} className={classes.minLabel} id="pastavshik">Pastavshik Name</InputLabel>
+                        <Select
+                           size='small'
+                           labelId="pastavshik"
+                           id="pastavshikId"
+                           value={postmanId}
+                           onChange={e => setPostmanId(e.target.value)}
                            required
-                        />
+                           input={<OutlinedInput label="Pastavshik Name" />}
+                        >
+                           {
+                              postmans.map(postman => (
+                                 <MenuItem key={postman.full_name} value={postman.id}>{postman.full_name}</MenuItem>
+                              ))
+                           }
+                        </Select>
                      </FormControl>
                   </Col>
                </Row>
-               <Row className='px-2 mt-5'>
-                  <BasketsList 
+               <Row className='w-100 mx-auto mt-4 px-0'>
+                  <BasketsList
                      loaded={loaded}
                      paginated={paginated}
                      count={count}

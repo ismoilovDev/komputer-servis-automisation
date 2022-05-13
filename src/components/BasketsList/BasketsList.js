@@ -39,7 +39,7 @@ const BasketsList = (props) => {
 
    return (
       <>
-         <TableContainer component={Paper}>
+         <TableContainer className='mx-auto px-0' component={Paper}>
             {
                props.loaded ? (
                   <Table sx={{ minWidth: 650 }} size="medium" aria-label="a dense table">
@@ -70,7 +70,7 @@ const BasketsList = (props) => {
                                  </StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '130px' }} align="right">{data?.price_uzs + " sum"}</StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '130px' }} align="right">{data?.price_usd + " $"}</StyledTableCell>
-                                 <StyledTableCell align="right">{data?.description ? data?.description : <i>No Description</i>}</StyledTableCell>
+                                 <StyledTableCell align="right">{data?.description ? data?.description.length > 60 ? `${data?.description.substring(0, 60)}...` : data?.description : <i>No Description</i>}</StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '120px' }} align="right">
                                     <span className='my_list_btns'>
                                        <button className='btn-edit' onClick={() => props.handleShow(data)}>

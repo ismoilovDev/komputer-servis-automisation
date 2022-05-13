@@ -26,6 +26,7 @@ import { FaUserCircle } from 'react-icons/fa';
 import { HiOutlineUserAdd } from 'react-icons/hi';
 import { VscHistory } from "react-icons/vsc";
 import { makeStyles } from '@mui/styles';
+import { RiShoppingBag3Line } from "react-icons/ri";
 import http from '../../Services/getData';
 import './Sidebar.css';
 
@@ -94,7 +95,7 @@ function ResponsiveDrawer(props) {
                      {open ? <MdArrowDropUp /> : <MdArrowDropDown />}
                   </ListItemButton>
                   <Collapse in={open} timeout="auto" className='drop_collapse' unmountOnExit>
-                     <Link to="/add-categories" className='collapse_link'>
+                     <Link to="/add-categories" onClick={() => setMobileOpen(false)} className='collapse_link'>
                         <ListItem button>
                            <ListItemText primary='Категорий' />
                         </ListItem>
@@ -110,7 +111,7 @@ function ResponsiveDrawer(props) {
                         </ListItem>
                      </Link>
                   </Collapse>
-                  <Link to="/categories">
+                  <Link to="/categories" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <IoLayersOutline className={classes.linkSvg} />
@@ -171,6 +172,17 @@ function ResponsiveDrawer(props) {
                            <HiOutlineUsers className={classes.linkSvg} />
                         </ListItemIcon>
                         <ListItemText primary='Клиенты' />
+                     </ListItem>
+                  </Link>
+               </div>
+               <div className='category-link-box'>
+                  <span className='category-link'>Поставщик</span>
+                  <Link to="/postmans">
+                     <ListItem button>
+                        <ListItemIcon className="my_link">
+                           <RiShoppingBag3Line className={classes.linkSvg} />
+                        </ListItemIcon>
+                        <ListItemText primary='Postmans' />
                      </ListItem>
                   </Link>
                </div>

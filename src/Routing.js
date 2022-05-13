@@ -18,6 +18,7 @@ import Clients from './Pages/Clients/Clients';
 import SelectedProducts from './Pages/SelectedProducts/SelectedProducts';
 import BasketsHistory from './Pages/BasketsHistory/BasketsHistory';
 import Main from './Pages/Main/Main';
+import Postmans from './Pages/Postmans/Postmans';
 
 
 function Routing() {
@@ -60,6 +61,9 @@ function Routing() {
           </Route>
           <Route path="/all-baskets">
             <BasketsHistory />
+          </Route>
+          <Route path="/postmans">
+            <Postmans />
           </Route>
         </Switch>
         <Drawer />

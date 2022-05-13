@@ -1,0 +1,18 @@
+.status {
+   position: absolute;
+   height: 7px;
+   width: 7px;
+   top: 5px;
+   left: 5px;
+   display: block;
+   border-radius: 50%;
+   z-index: 1000;
+}
+
+.status.red {
+   background-color: red;
+}
+
+.status.green {
+   background-color: green;
+}
