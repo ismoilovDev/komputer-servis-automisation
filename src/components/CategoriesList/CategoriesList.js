@@ -71,7 +71,7 @@ const CategoriesList = (props) => {
                                     {data?.name.length > 60 ? data?.name.substring(0, 57) + '...' : data?.name}
                                  </StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '140px' }} align="right">{data?.min_percent}</StyledTableCell>
-                                 <StyledTableCell style={{ minWidth: '150px' }} align="right">{data?.whole_percent}</StyledTableCell>
+                                 <StyledTableCell style={{ minWidth: '160px' }} align="right">{data?.whole_percent}</StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '140px' }} align="right">{data?.max_percent}</StyledTableCell>
                                  <StyledTableCell style={{ minWidth: '120px' }} align="right">
                                     <span className='my_list_btns'>

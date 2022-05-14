@@ -57,7 +57,7 @@ const List = (props) => {
                   <Table sx={{ minWidth: 650 }} size="medium" aria-label="a dense table">
                      <TableHead>
                         <TableRow>
-                           <StyledTableCell style={{ minWidth: '400px' }}>{props.name}</StyledTableCell>
+                           <StyledTableCell style={{ minWidth: '300px' }}>{props.name}</StyledTableCell>
                            {
                               props.rows.map(row => (
                                  <StyledTableCell key={row} align="right">{row}</StyledTableCell>

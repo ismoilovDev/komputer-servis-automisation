@@ -122,7 +122,7 @@ function ResponsiveDrawer(props) {
                </div>
                <div className='category-link-box'>
                   <span className='category-link'>Продукты</span>
-                  <Link to="/add-products">
+                  <Link to="/add-products" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <RiPlayListAddLine className={classes.linkSvg} />
@@ -130,7 +130,7 @@ function ResponsiveDrawer(props) {
                         <ListItemText primary='Добавить' />
                      </ListItem>
                   </Link>
-                  <Link to="/products">
+                  <Link to="/products" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <FiServer className={classes.linkSvg} />
@@ -141,7 +141,7 @@ function ResponsiveDrawer(props) {
                </div>
                <div className='category-link-box'>
                   <span className='category-link'>Заявки</span>
-                  <Link to="/add-baskets">
+                  <Link to="/add-baskets" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <HiOutlineDocumentAdd className={classes.linkSvg} />
@@ -149,7 +149,7 @@ function ResponsiveDrawer(props) {
                         <ListItemText primary='Создание Заявки' />
                      </ListItem>
                   </Link>
-                  <Link to="/all-baskets">
+                  <Link to="/all-baskets" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <VscHistory className={classes.linkSvg} />
@@ -166,7 +166,7 @@ function ResponsiveDrawer(props) {
                      </ListItemIcon>
                      <ListItemText className='for-font' primary='Добавить' style={{ "cursor": "pointer" }} />
                   </ListItem>
-                  <Link to="/clients">
+                  <Link to="/clients" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <HiOutlineUsers className={classes.linkSvg} />
@@ -177,7 +177,7 @@ function ResponsiveDrawer(props) {
                </div>
                <div className='category-link-box'>
                   <span className='category-link'>Поставщик</span>
-                  <Link to="/postmans">
+                  <Link to="/postmans" onClick={() => setMobileOpen(false)}>
                      <ListItem button>
                         <ListItemIcon className="my_link">
                            <RiShoppingBag3Line className={classes.linkSvg} />
