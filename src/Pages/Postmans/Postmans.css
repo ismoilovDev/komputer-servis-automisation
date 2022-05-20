@@ -1,0 +1,7 @@
+.postman .ant-modal-mask {
+   z-index: 1500;
+}
+
+.postmans .ant-modal-wrap {
+   z-index: 1600;
+}

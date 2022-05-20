@@ -5,10 +5,16 @@ import { Paper } from '@mui/material';
 import http from '../../Services/getData';
 import { paginate } from '../../utils/paginate';
 import PostmansList from '../../components/PostmansList/PostmansList';
+import Paylet from '../../components/Paylet/Paylet';
 
 function Postmans() {
    const [loaded, setLoaded] = useState(false);
    const [postmans, setPostmans] = useState([]);
+
+   // Paylet --->
+   const [isModalVisible, setIsModalVisible] = useState(false);
+   
+   // Pagination --->
    const [currentPage, setCurrentPage] = useState(1);
    const [pageSize] = useState(8);
    let countPostman = postmans.length;
@@ -28,8 +34,9 @@ function Postmans() {
          .catch()
    }
    
-   const rows = ['Number', 'INN'];
+   const rows = ['Number', 'INN', "Pay"];
 
+   // PAGINATION ----------------->
    // Change Page
    const hendleChangePage = (page) => {
       setCurrentPage(page)
@@ -39,8 +46,21 @@ function Postmans() {
    // Paginate
    const postmanPaginated = paginate(postmans, currentPage, pageSize);
 
+   // PAYLET ---------------------->
+   
+   const showModal = () => {
+      setIsModalVisible(true);
+   };
+
+   const handleOk = () => {
+      setIsModalVisible(false);
+   };
+
+   const handleCancel = () => {
+      setIsModalVisible(false);
+   };
    return (
-      <div className='main px-2 px-md-3'>
+      <div className='main postmans px-2 px-md-3'>
          <Title
             title="Продукты"
             children={<FiServer />}
@@ -54,8 +74,15 @@ function Postmans() {
                hendleChangePage={hendleChangePage}
                name="Postman Name"
                rows={rows}
+               showModal={showModal}
             />
          </Paper>
+         <Paylet 
+            isModalVisible={isModalVisible}
+            showModal={showModal}
+            handleOk={handleOk}
+            handleCancel={handleCancel}
+         />
       </div>
    )
 }

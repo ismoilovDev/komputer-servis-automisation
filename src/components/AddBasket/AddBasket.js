@@ -27,7 +27,7 @@ const useStyles = makeStyles({
    }
 });
 
-function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRef, products, addSum }) {
+function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRef, products }) {
    const classes = useStyles();
    const [productId, setProductId] = useState('');
    const [productName, setProductName] = useState('');
@@ -42,8 +42,7 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
       e.preventDefault()
       if (productId) {
          const name = products.filter(item => item.id === Number(productId))
-         setProductName(name[0].name);
-         console.log(name);
+         setProductName(name[0].name);;
       }
       const data = {
          id: Math.random() * 10000,
@@ -52,6 +51,7 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
          count: count,
          unit: unit,
          price: price,
+         isSelected: true,
          description: description
       }
       setOrders(prev => [...prev, data]);
@@ -62,7 +62,6 @@ function Basket({ orders, handleClose, setOrders, display, setDisplay, wrapperRe
       setUnit("")
       setCount("")
       setDescription("")
-      addSum(orders)
    }
 
    const setSelectCate = (proName, id) => {

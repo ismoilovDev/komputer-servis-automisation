@@ -39,6 +39,10 @@ function Test({ setToken }) {
       setOpenBackdrop(true);
    };
 
+   useEffect(() => {
+      addSum();
+      console.log(orders);
+   }, [orders])
 
    // For Modal --------------->
    const handleClose = () => setOpen(false);
@@ -99,7 +103,7 @@ function Test({ setToken }) {
    // Delete Order ------------>
    const deleteOrder = (id) => {
       setOrders(orders.filter(item => item.id !== id))
-      addSum(orders);
+      addSum();
    }
 
    function filteredData() {
@@ -110,6 +114,7 @@ function Test({ setToken }) {
          let price = item.price;
          let description = item.description;
          delete item.id;
+         delete item.isSelected;
          return {
             product_id,
             count,
@@ -121,8 +126,10 @@ function Test({ setToken }) {
       return filteredOrders
    }
    
-   const addSum = (data) => {
-      data.forEach(order => {
+   const addSum = () => {
+      setUsdAllSum(0)
+      setUzsAllSum(0)
+      orders.forEach(order => {
          if(order.unit === "USD") {
             setUsdAllSum(usdAllSum => (order.price * order.count) + usdAllSum);
          }
@@ -137,7 +144,6 @@ function Test({ setToken }) {
       e.preventDefault();
       handleOpen()
       if (filteredData().length !== 0) {
-         addSum(orders);
          const data = {
             postman_id: postmanId,
             usd: usdAllSum,
@@ -180,7 +186,6 @@ function Test({ setToken }) {
             <Paper elevation={2} className="py-3 px-2 mb-4">
                <Container>
                   <Row className='w-100 justify-content-around basket-price'>
-                     <h3>Заявку Цены</h3>
                      <Col xs='12' md='6'>
                         <p><strong>Доллар США: </strong> {usdAllSum}</p>
                      </Col>
@@ -284,7 +289,6 @@ function Test({ setToken }) {
                   wrapperRef={wrapperRef}
                   products={products}
                   setProducts={setProducts}
-                  addSum={addSum}
                />
             </Box>
          </Modal>
