@@ -1,24 +1,11 @@
 import React, { useState } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
+  Routes,
   Route
 } from 'react-router-dom';
-import Sidebar from './components/Sidebar/Sidebar';
-import Drawer from './components/Drawer/Drawer';
-import AddBaskets from './Pages/AddBaskets/AddBaskets';
-import AddCategories from './Pages/AddCategories/AddCategories';
-import AddSubCategories from './Pages/AddSubCategories/AddSubCategories';
-import AddDoubleSubCategories from './Pages/AddDoubleSubCategory/AddDoubleSubCategory';
-import AddProducts from './Pages/AddProducts/AddProducts';
-import Categories from './Pages/Categories/Categories';
-import Products from './Pages/Products/Products'
 import Login from './Pages/Login/Login';
-import Clients from './Pages/Clients/Clients';
-import SelectedProducts from './Pages/SelectedProducts/SelectedProducts';
-import BasketsHistory from './Pages/BasketsHistory/BasketsHistory';
-import Main from './Pages/Main/Main';
-import Postmans from './Pages/Postmans/Postmans';
+import Layout from './components/Layout';
 
 
 function Routing() {
@@ -29,45 +16,29 @@ function Routing() {
   return (
     <div>
       <Router>
-        <Sidebar />
-        <Switch>
-          <Route exact path="/">
-            <Main setToken={setToken} />
-          </Route>
-          <Route path="/add-baskets">
-            <AddBaskets setToken={setToken} />
-          </Route>
-          <Route path="/add-categories">
-            <AddCategories />
-          </Route>
-          <Route path="/add-sub-categories">
-            <AddSubCategories />
-          </Route>
-          <Route path="/add-double-sub-categories">
-            <AddDoubleSubCategories />
-          </Route>
-          <Route path="/add-products">
-            <AddProducts />
-          </Route>
-          <Route path="/categories">
-            <Categories />
-          </Route>
-          <Route path="/products">
-            <Products />
-          </Route>
-          <Route path="/selected-products/:id" component={SelectedProducts} />
-          <Route path="/clients">
-            <Clients />
-          </Route>
-          <Route path="/all-baskets">
-            <BasketsHistory />
-          </Route>
-          <Route path="/postmans">
-            <Postmans />
-          </Route>
-        </Switch>
-        <Drawer />
+        <Routes>
+          <Route path="/*" element={<Layout />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
       </Router>
+      {/* <Router>
+        <Sidebar />
+        <Routes>
+          <Route path="/" element={<Main setToken={setToken} />} />
+          <Route path="/add-baskets" element={<AddBaskets setToken={setToken} />} />
+          <Route path="/add-categories" element={<AddCategories />} />
+          <Route path="/add-sub-categories" element={<AddSubCategories />} />
+          <Route path="/add-double-sub-categories" element={<AddDoubleSubCategories />} />
+          <Route path="/add-products" element={<AddProducts />} />
+          <Route path="/categories" element={<Categories />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/selected-products/:id" element={<SelectedProducts />} />
+          <Route path="/clients" element={<Clients />} />
+          <Route path="/all-baskets" element={<BasketsHistory />} />
+          <Route path="/postmans" element={<Postmans} />
+        </Routes>
+        <Drawer />
+      </Router> */}
 
     </div>
   );

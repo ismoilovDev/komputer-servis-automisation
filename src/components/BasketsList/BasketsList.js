@@ -76,9 +76,15 @@ const BasketsList = (props) => {
                                        <button className='btn-edit' onClick={() => props.handleShow(data)}>
                                           <FaRegEdit />
                                        </button>
-                                       <button>
-                                          <IoMdTrash />
-                                       </button>
+                                       {
+                                          props.basketType === "unchecked" ? 
+                                          <button>
+                                             <IoMdTrash />
+                                          </button> : 
+                                          <button>
+                                             Hi
+                                          </button>
+                                       }
                                     </span>
                                  </StyledTableCell>
                               </StyledTableRow>

@@ -24,7 +24,7 @@
     "react-icons": "^4.3.1",
     "react-modern-calendar-datepicker": "^3.1.6",
     "react-number-format": "^4.9.3",
-    "react-router-dom": "^5.3.0",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.0",
     "react-tabindex": "^1.0.3",
     "sweetalert2": "^11.4.13",
